@@ -22,6 +22,23 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
     public IVersionCompareStrategy Strategy { get; }
 
     /// <summary>
+    /// Indicates whether this version is a prerelease version (contains any pre-release tokens).
+    /// </summary>
+    public bool IsPrerelease
+    {
+        get
+        {
+            if (Tokens == null) return false;
+            foreach (var t in Tokens)
+            {
+                if (t.Kind == VersionTokenKind.PreRelease)
+                    return true;
+            }
+            return false;
+        }
+    }
+
+    /// <summary>
     /// Constructs a StringVersion by parsing a version string.
     /// This constructor is guaranteed not to throw any exceptions, even if the input is invalid or tokenization fails.
     /// </summary>
