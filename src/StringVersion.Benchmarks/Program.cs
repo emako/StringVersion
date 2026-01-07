@@ -2,14 +2,15 @@ using System;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 
-public class Benchmarks
+public sealed class Benchmarks
 {
-    private string[] samples = new[] {
+    private string[] samples =
+    [
         "1.0.0+build.123",
         "1.0.0-rc.1",
         "10.0.22621",
-        "2024.01.15"
-    };
+        "2024.01.15",
+    ];
 
     [Benchmark]
     public void ParseAll()
@@ -18,9 +19,9 @@ public class Benchmarks
     }
 }
 
-class Program
+internal sealed class Program
 {
-    static void Main(string[] args)
+    public static void Main(string[] args)
     {
         var summary = BenchmarkRunner.Run<Benchmarks>();
     }
