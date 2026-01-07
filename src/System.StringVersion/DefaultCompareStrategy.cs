@@ -6,11 +6,6 @@ namespace System.StringVersion;
 public class DefaultCompareStrategy : IVersionCompareStrategy
 {
     /// <summary>
-    /// Singleton instance of the default compare strategy.
-    /// </summary>
-    public static DefaultCompareStrategy Instance { get; } = new DefaultCompareStrategy();
-
-    /// <summary>
     /// Compares two arrays of version tokens using default rules.
     /// </summary>
     public virtual int Compare(in VersionToken[] a, in VersionToken[] b)

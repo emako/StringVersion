@@ -9,11 +9,6 @@ namespace System.StringVersion;
 public class SemVerCompareStrategy : IVersionCompareStrategy
 {
     /// <summary>
-    /// Singleton instance of the SemVer compare strategy.
-    /// </summary>
-    public static SemVerCompareStrategy Instance { get; } = new SemVerCompareStrategy();
-
-    /// <summary>
     /// Compares two arrays of version tokens using SemVer rules.
     /// </summary>
     public virtual int Compare(in VersionToken[] a, in VersionToken[] b)

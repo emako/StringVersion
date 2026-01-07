@@ -57,7 +57,7 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
         }
         Tokens = tokens;
         Original = original ?? string.Empty;
-        Strategy = SemVerCompareStrategy.Instance;
+        Strategy = new SemVerCompareStrategy();
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
         // Null checks to guarantee no exception is thrown
         Tokens = tokens ?? [];
         Original = original ?? string.Empty;
-        Strategy = strategy ?? SemVerCompareStrategy.Instance;
+        Strategy = strategy ?? new SemVerCompareStrategy();
     }
 
     /// <summary>
