@@ -25,16 +25,13 @@ internal static class Tokenizer
         while (s.Length > 0 && char.IsWhiteSpace(s[0])) s = s.Slice(1);
         while (s.Length > 0 && char.IsWhiteSpace(s[s.Length - 1])) s = s.Slice(0, s.Length - 1);
 
-        // If the version substring was preceded by a 'v' or 'V' (e.g. "V1.2"),
-        // starting from the first digit already removes it; no explicit check needed.
-
         var list = new PooledList<VersionToken>();
         int iIdx = 0;
         while (iIdx < s.Length)
         {
             int j = iIdx;
             // read until separator
-            while (j < s.Length && s[j] != '.' && s[j] != '-' && s[j] != '+') j++;
+            while (j < s.Length && s[j] != '.' && s[j] != '-' && s[j] != '+' && s[j] != '_') j++;
 
             var seg = s.Slice(iIdx, j - iIdx);
             if (seg.Length > 0)
@@ -54,7 +51,6 @@ internal static class Tokenizer
                 }
                 else
                 {
-                    // allocate only for textual tokens
                     list.Add(new VersionToken(seg.ToString(), VersionTokenKind.Text));
                 }
             }
@@ -63,7 +59,7 @@ internal static class Tokenizer
 
             char sep = s[j];
             // handle pre-release/build metadata
-            if (sep == '-')
+            if (sep == '-' || sep == '_')
             {
                 int k = j + 1;
                 int startPr = k;

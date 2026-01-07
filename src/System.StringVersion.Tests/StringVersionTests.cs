@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace System.StringVersion.Tests;
@@ -9,6 +8,8 @@ public sealed class StringVersionTests
     [InlineData("1.0", "1.0-beta", 1)]
     [InlineData("1.0-beta", "1.0-rc", -1)]
     [InlineData("1.0-rc.1", "1.0", -1)]
+    [InlineData("1.0_rc.1", "1.0", -1)]
+    [InlineData("1.0_a1", "1.0", -1)]
     [InlineData("1.0.0", "1.0", 0)]
     [InlineData("10.0", "2.0", 1)]
     [InlineData("2024.01.15", "2023.12.31", 1)]
@@ -37,9 +38,9 @@ public sealed class StringVersionTests
     [Fact]
     public void PreReleaseOrdering()
     {
-        StringVersion.TryParse("1.0-beta", out var v1);
-        StringVersion.TryParse("1.0-rc", out var v2);
-        StringVersion.TryParse("1.0", out var v3);
+        _ = StringVersion.TryParse("1.0-beta", out var v1);
+        _ = StringVersion.TryParse("1.0-rc", out var v2);
+        _ = StringVersion.TryParse("1.0", out var v3);
         Assert.True(v1!.CompareTo(v2!) < 0);
         Assert.True(v2!.CompareTo(v3!) < 0);
     }
