@@ -1,6 +1,9 @@
-![logo](branding/titlebar.png)
+![logo](https://raw.githubusercontent.com/emako/StringVersion/refs/heads/master/branding/titlebar.png)
 
-# System.StringVersion
+[![GitHub license](https://img.shields.io/github/license/emako/StringVersion)](https://github.com/emako/StringVersion/blob/master/LICENSE) [![NuGet](https://img.shields.io/nuget/v/StringVersion.svg)](https://nuget.org/packages/StringVersion) [![Actions](https://github.com/emako/StringVersion/actions/workflows/library.nuget.yml/badge.svg)](https://github.com/emako/StringVersion/actions/workflows/library.nuget.yml)
+
+
+# StringVersion
 
 A lightweight, high-performance .NET library for parsing and comparing string-based versions, supporting multiple comparison strategies (including SemVer). Features a Span-based tokenizer, custom strategies, and is compatible with a wide range of .NET targets.
 
