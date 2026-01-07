@@ -1,32 +1,14 @@
+using System.Diagnostics;
+
 namespace System.StringVersion;
 
-/// <summary>
-/// Represents the type of a version token segment.
-/// </summary>
-public enum VersionTokenKind
-{
-    /// <summary>
-    /// Numeric segment, e.g. major/minor/patch numbers.
-    /// </summary>
-    Numeric,
-    /// <summary>
-    /// Text segment, e.g. labels like 'alpha', 'beta'.
-    /// </summary>
-    Text,
-    /// <summary>
-    /// Pre-release segment, e.g. '-rc', '-alpha', '-beta'.
-    /// </summary>
-    PreRelease,
-    /// <summary>
-    /// Build metadata segment, e.g. '+build123'.
-    /// </summary>
-    BuildMetadata,
-}
-
+[DebuggerDisplay("{ToString(),nq}")]
 public readonly struct VersionToken
 {
     public VersionTokenKind Kind { get; }
+
     public long Numeric { get; }
+
     public string? Text { get; }
 
     public VersionToken(long number, VersionTokenKind kind = VersionTokenKind.Numeric)
@@ -47,4 +29,30 @@ public readonly struct VersionToken
     {
         return Kind == VersionTokenKind.Numeric ? Numeric.ToString() : Text ?? string.Empty;
     }
+}
+
+/// <summary>
+/// Represents the type of a version token segment.
+/// </summary>
+public enum VersionTokenKind
+{
+    /// <summary>
+    /// Numeric segment, e.g. major/minor/patch numbers.
+    /// </summary>
+    Numeric,
+
+    /// <summary>
+    /// Text segment, e.g. labels like 'alpha', 'beta'.
+    /// </summary>
+    Text,
+
+    /// <summary>
+    /// Pre-release segment, e.g. '-rc', '-alpha', '-beta'.
+    /// </summary>
+    PreRelease,
+
+    /// <summary>
+    /// Build metadata segment, e.g. '+build123'.
+    /// </summary>
+    BuildMetadata,
 }

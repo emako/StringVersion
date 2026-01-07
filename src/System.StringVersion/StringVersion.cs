@@ -1,6 +1,6 @@
 namespace System.StringVersion;
 
-public sealed class StringVersion(VersionToken[] tokens, string original, IVersionCompareStrategy? strategy = null) : IComparable<StringVersion>, IEquatable<StringVersion>
+public partial class StringVersion(VersionToken[] tokens, string original, IVersionCompareStrategy? strategy = null) : IComparable<StringVersion>, IEquatable<StringVersion>
 {
     private readonly VersionToken[] _tokens = tokens ?? [];
 
@@ -39,24 +39,31 @@ public sealed class StringVersion(VersionToken[] tokens, string original, IVersi
 
     public static StringVersion Parse(string s)
     {
-        if (TryParse(s, out var v) && v != null) return v;
+        if (TryParse(s, out var v) && v is not null) return v;
         throw new FormatException("Invalid version string");
     }
 
     public int CompareTo(StringVersion? other)
     {
-        if (other == null) return 1;
+        if (other is null) return 1;
         return Strategy.Compare(_tokens, other._tokens);
     }
 
     public override bool Equals(object? obj)
     {
-        return Equals(obj as StringVersion);
+        return obj switch
+        {
+            null => false,
+            StringVersion v => Equals(v),
+            Version v => Equals(v),
+            Tuple<int, int> v => Equals(v),
+            _ => base.Equals(obj),
+        };
     }
 
     public bool Equals(StringVersion? other)
     {
-        if (other == null) return false;
+        if (other is null) return false;
         return CompareTo(other) == 0;
     }
 
@@ -80,13 +87,17 @@ public sealed class StringVersion(VersionToken[] tokens, string original, IVersi
         return Parse(s);
     }
 
-    public static bool operator >(StringVersion a, StringVersion b) => a.CompareTo(b) > 0;
+    public static bool operator >(StringVersion a, StringVersion b)
+        => a.CompareTo(b) > 0;
 
-    public static bool operator <(StringVersion a, StringVersion b) => a.CompareTo(b) < 0;
+    public static bool operator <(StringVersion a, StringVersion b)
+        => a.CompareTo(b) < 0;
 
-    public static bool operator >=(StringVersion a, StringVersion b) => a.CompareTo(b) >= 0;
+    public static bool operator >=(StringVersion a, StringVersion b)
+        => a.CompareTo(b) >= 0;
 
-    public static bool operator <=(StringVersion a, StringVersion b) => a.CompareTo(b) <= 0;
+    public static bool operator <=(StringVersion a, StringVersion b)
+        => a.CompareTo(b) <= 0;
 
     public static bool operator ==(StringVersion? a, StringVersion? b)
     {
@@ -95,5 +106,6 @@ public sealed class StringVersion(VersionToken[] tokens, string original, IVersi
         return a.CompareTo(b) == 0;
     }
 
-    public static bool operator !=(StringVersion? a, StringVersion? b) => !(a == b);
+    public static bool operator !=(StringVersion? a, StringVersion? b)
+        => !(a == b);
 }

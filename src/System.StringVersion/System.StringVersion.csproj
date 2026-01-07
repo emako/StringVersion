@@ -34,5 +34,6 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'net462' or '$(TargetFramework)' == 'net472' or '$(TargetFramework)' == 'net48' or '$(TargetFramework)' == 'net481' or '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Memory" Version="4.5.5" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 </Project>
