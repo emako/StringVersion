@@ -2,6 +2,18 @@
 
 public partial class StringVersion
 {
+    /// <summary>
+    /// Compares the current <see cref="StringVersion"/> instance to a specified <see cref="Version"/> object.
+    /// </summary>
+    /// <param name="other">The <see cref="Version"/> object to compare with.</param>
+    /// <returns>
+    /// A signed integer that indicates the relative values of this instance and <paramref name="other"/>:
+    /// <list type="bullet">
+    /// <item><description>Less than zero: This instance is less than <paramref name="other"/>.</description></item>
+    /// <item><description>Zero: This instance is equal to <paramref name="other"/>.</description></item>
+    /// <item><description>Greater than zero: This instance is greater than <paramref name="other"/> or <paramref name="other"/> is null.</description></item>
+    /// </list>
+    /// </returns>
     public int CompareTo(Version? other)
     {
         if (other == null) return 1;
@@ -24,6 +36,11 @@ public partial class StringVersion
         return 0;
     }
 
+    /// <summary>
+    /// Determines whether the current <see cref="StringVersion"/> instance is equal to the specified <see cref="Version"/> object.
+    /// </summary>
+    /// <param name="other">The <see cref="Version"/> object to compare with.</param>
+    /// <returns><c>true</c> if the objects are equal; otherwise, <c>false</c>.</returns>
     public bool Equals(Version? other)
         => CompareTo(other) == 0;
 

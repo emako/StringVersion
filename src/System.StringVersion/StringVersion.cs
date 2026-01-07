@@ -74,23 +74,6 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
     }
 
     /// <summary>
-    /// Parses a version string into a StringVersion instance, or throws if invalid.
-    /// </summary>
-    public static StringVersion Parse(string original)
-    {
-        return new StringVersion(original);
-    }
-
-    /// <summary>
-    /// Compares this version to another StringVersion.
-    /// </summary>
-    public int CompareTo(StringVersion? other)
-    {
-        if (other is null) return 1;
-        return Strategy.Compare(_tokens, other._tokens);
-    }
-
-    /// <summary>
     /// Checks equality with another object (StringVersion, Version, or tuple).
     /// </summary>
     public override bool Equals(object? obj)
@@ -98,6 +81,7 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
         return obj switch
         {
             null => false,
+            string v => Equals(v),
             StringVersion v => Equals(v),
             Version v => Equals(v),
             Tuple<int, int> v => Equals(v),
@@ -105,15 +89,6 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
             Tuple<int, int, int, int> v => Equals(v),
             _ => base.Equals(obj),
         };
-    }
-
-    /// <summary>
-    /// Checks equality with another StringVersion.
-    /// </summary>
-    public bool Equals(StringVersion? other)
-    {
-        if (other is null) return false;
-        return CompareTo(other) == 0;
     }
 
     /// <summary>
@@ -136,64 +111,4 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
     /// Returns the original version string.
     /// </summary>
     public override string ToString() => Original;
-
-    /// <summary>
-    /// Implicit conversion from string to StringVersion.
-    /// </summary>
-    public static implicit operator StringVersion(string s)
-    {
-        return Parse(s);
-    }
-
-    /// <summary>
-    /// Determines whether the left <see cref="StringVersion"/> is greater than the right <see cref="StringVersion"/>.
-    /// </summary>
-    /// <param name="left">The left operand.</param>
-    /// <param name="right">The right operand.</param>
-    public static bool operator >(StringVersion left, StringVersion right)
-        => left.CompareTo(right) > 0;
-
-    /// <summary>
-    /// Determines whether the left <see cref="StringVersion"/> is less than the right <see cref="StringVersion"/>.
-    /// </summary>
-    /// <param name="left">The left operand.</param>
-    /// <param name="right">The right operand.</param>
-    public static bool operator <(StringVersion left, StringVersion right)
-        => left.CompareTo(right) < 0;
-
-    /// <summary>
-    /// Determines whether the left <see cref="StringVersion"/> is greater than or equal to the right <see cref="StringVersion"/>.
-    /// </summary>
-    /// <param name="left">The left operand.</param>
-    /// <param name="right">The right operand.</param>
-    public static bool operator >=(StringVersion left, StringVersion right)
-        => left.CompareTo(right) >= 0;
-
-    /// <summary>
-    /// Determines whether the left <see cref="StringVersion"/> is less than or equal to the right <see cref="StringVersion"/>.
-    /// </summary>
-    /// <param name="left">The left operand.</param>
-    /// <param name="right">The right operand.</param>
-    public static bool operator <=(StringVersion left, StringVersion right)
-        => left.CompareTo(right) <= 0;
-
-    /// <summary>
-    /// Determines whether two <see cref="StringVersion"/> instances are equal.
-    /// </summary>
-    /// <param name="left">The left operand.</param>
-    /// <param name="right">The right operand.</param>
-    public static bool operator ==(StringVersion? left, StringVersion? right)
-    {
-        if (ReferenceEquals(left, right)) return true;
-        if (left is null || right is null) return false;
-        return left.CompareTo(right) == 0;
-    }
-
-    /// <summary>
-    /// Determines whether two <see cref="StringVersion"/> instances are not equal.
-    /// </summary>
-    /// <param name="left">The left operand.</param>
-    /// <param name="right">The right operand.</param>
-    public static bool operator !=(StringVersion? left, StringVersion? right)
-        => !(left == right);
 }

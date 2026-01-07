@@ -2,36 +2,91 @@
 
 public partial class StringVersion
 {
+    /// <summary>
+    /// Compares the current <see cref="StringVersion"/> instance to a version represented by a <see cref="Tuple{int, int}"/>.
+    /// </summary>
+    /// <param name="tuple">A tuple containing major and minor version numbers.</param>
+    /// <returns>An integer indicating the relative order.</returns>
     public int CompareTo(Tuple<int, int> tuple)
         => CompareTo(new Version(tuple.Item1, tuple.Item2));
 
+    /// <summary>
+    /// Compares the current <see cref="StringVersion"/> instance to a version represented by a <see cref="Tuple{int, int, int}"/>.
+    /// </summary>
+    /// <param name="tuple">A tuple containing major, minor, and build version numbers.</param>
+    /// <returns>An integer indicating the relative order.</returns>
     public int CompareTo(Tuple<int, int, int> tuple)
         => CompareTo(new Version(tuple.Item1, tuple.Item2, tuple.Item3));
 
+    /// <summary>
+    /// Compares the current <see cref="StringVersion"/> instance to a version represented by a <see cref="Tuple{int, int, int, int}"/>.
+    /// </summary>
+    /// <param name="tuple">A tuple containing major, minor, build, and revision version numbers.</param>
+    /// <returns>An integer indicating the relative order.</returns>
     public int CompareTo(Tuple<int, int, int, int> tuple)
         => CompareTo(new Version(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4));
 
+    /// <summary>
+    /// Compares the current <see cref="StringVersion"/> instance to a version represented by a value tuple (major, minor, build).
+    /// </summary>
+    /// <param name="tuple">A value tuple containing major, minor, and build version numbers.</param>
+    /// <returns>An integer indicating the relative order.</returns>
     public int CompareTo((int, int, int) tuple)
         => CompareTo(new Version(tuple.Item1, tuple.Item2, tuple.Item3));
 
+    /// <summary>
+    /// Compares the current <see cref="StringVersion"/> instance to a version represented by a value tuple (major, minor, build, revision).
+    /// </summary>
+    /// <param name="tuple">A value tuple containing major, minor, build, and revision version numbers.</param>
+    /// <returns>An integer indicating the relative order.</returns>
     public int CompareTo((int, int, int, int) tuple)
         => CompareTo(new Version(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4));
 
+    /// <summary>
+    /// Determines whether the current <see cref="StringVersion"/> instance is equal to the specified value tuple (major, minor).
+    /// </summary>
+    /// <param name="tuple">A value tuple containing major and minor version numbers.</param>
+    /// <returns><c>true</c> if equal; otherwise, <c>false</c>.</returns>
     public bool Equals((int, int) tuple)
         => CompareTo(tuple) == 0;
 
+    /// <summary>
+    /// Determines whether the current <see cref="StringVersion"/> instance is equal to the specified value tuple (major, minor, build).
+    /// </summary>
+    /// <param name="tuple">A value tuple containing major, minor, and build version numbers.</param>
+    /// <returns><c>true</c> if equal; otherwise, <c>false</c>.</returns>
     public bool Equals((int, int, int) tuple)
         => CompareTo(tuple) == 0;
 
+    /// <summary>
+    /// Determines whether the current <see cref="StringVersion"/> instance is equal to the specified value tuple (major, minor, build, revision).
+    /// </summary>
+    /// <param name="tuple">A value tuple containing major, minor, build, and revision version numbers.</param>
+    /// <returns><c>true</c> if equal; otherwise, <c>false</c>.</returns>
     public bool Equals((int, int, int, int) tuple)
         => CompareTo(tuple) == 0;
 
+    /// <summary>
+    /// Determines whether the current <see cref="StringVersion"/> instance is equal to the specified <see cref="Tuple{int, int}"/>.
+    /// </summary>
+    /// <param name="tuple">A tuple containing major and minor version numbers.</param>
+    /// <returns><c>true</c> if equal; otherwise, <c>false</c>.</returns>
     public bool Equals(Tuple<int, int> tuple)
         => CompareTo(tuple) == 0;
 
+    /// <summary>
+    /// Determines whether the current <see cref="StringVersion"/> instance is equal to the specified <see cref="Tuple{int, int, int}"/>.
+    /// </summary>
+    /// <param name="tuple">A tuple containing major, minor, and build version numbers.</param>
+    /// <returns><c>true</c> if equal; otherwise, <c>false</c>.</returns>
     public bool Equals(Tuple<int, int, int> tuple)
         => CompareTo(tuple) == 0;
 
+    /// <summary>
+    /// Determines whether the current <see cref="StringVersion"/> instance is equal to the specified <see cref="Tuple{int, int, int, int}"/>.
+    /// </summary>
+    /// <param name="tuple">A tuple containing major, minor, build, and revision version numbers.</param>
+    /// <returns><c>true</c> if equal; otherwise, <c>false</c>.</returns>
     public bool Equals(Tuple<int, int, int, int> tuple)
         => CompareTo(tuple) == 0;
 
