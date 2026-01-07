@@ -1,3 +1,5 @@
+using System;
+
 namespace System.StringVersion;
 
 /// <summary>
@@ -15,8 +17,8 @@ public sealed class DefaultCompareStrategy : IVersionCompareStrategy
     /// </summary>
     public int Compare(in VersionToken[] a, in VersionToken[] b)
     {
-        var arrA = a ?? [];
-        var arrB = b ?? [];
+        VersionToken[] arrA = a ?? [];
+        VersionToken[] arrB = b ?? [];
         int la = arrA.Length;
         int lb = arrB.Length;
         int max = Math.Max(la, lb);
@@ -24,8 +26,8 @@ public sealed class DefaultCompareStrategy : IVersionCompareStrategy
         {
             if (i >= la) return -1;
             if (i >= lb) return 1;
-            var ta = arrA[i];
-            var tb = arrB[i];
+            VersionToken ta = arrA[i];
+            VersionToken tb = arrB[i];
             if (ta.Kind != tb.Kind)
             {
                 // Numeric tokens have higher precedence than text tokens

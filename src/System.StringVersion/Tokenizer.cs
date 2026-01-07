@@ -35,7 +35,7 @@ internal static class Tokenizer
         while (s.Length > 0 && char.IsWhiteSpace(s[0])) s = s.Slice(1);
         while (s.Length > 0 && char.IsWhiteSpace(s[s.Length - 1])) s = s.Slice(0, s.Length - 1);
 
-        var list = new PooledList<VersionToken>();
+        PooledList<VersionToken> list = new();
         int iIdx = 0;
         while (iIdx < s.Length)
         {
@@ -43,7 +43,7 @@ internal static class Tokenizer
             // Read until separator
             while (j < s.Length && s[j] != '.' && s[j] != '-' && s[j] != '+' && s[j] != '_' && s[j] != ' ') j++;
 
-            var seg = s.Slice(iIdx, j - iIdx);
+            ReadOnlySpan<char> seg = s.Slice(iIdx, j - iIdx);
             if (seg.Length > 0)
             {
                 // Check if segment is all digits (numeric token)
@@ -74,13 +74,13 @@ internal static class Tokenizer
                 int k = j + 1;
                 int startPr = k;
                 while (k < s.Length && s[k] != '+') k++;
-                var pr = s.Slice(startPr, k - startPr);
+                ReadOnlySpan<char> pr = s.Slice(startPr, k - startPr);
                 int p = 0;
                 while (p < pr.Length)
                 {
                     int q = p;
                     while (q < pr.Length && pr[q] != '.') q++;
-                    var sub = pr.Slice(p, q - p);
+                    ReadOnlySpan<char> sub = pr.Slice(p, q - p);
                     bool digits = true; long val = 0;
                     for (int x = 0; x < sub.Length; x++)
                     {
@@ -95,13 +95,13 @@ internal static class Tokenizer
                 if (iIdx < s.Length && s[iIdx] == '+')
                 {
                     int bstart = iIdx + 1;
-                    var build = s.Slice(bstart);
+                    ReadOnlySpan<char> build = s.Slice(bstart);
                     int bp = 0;
                     while (bp < build.Length)
                     {
                         int bq = bp;
                         while (bq < build.Length && build[bq] != '.') bq++;
-                        var bsub = build.Slice(bp, bq - bp);
+                        ReadOnlySpan<char> bsub = build.Slice(bp, bq - bp);
                         list.Add(new VersionToken(bsub.ToString(), VersionTokenKind.BuildMetadata));
                         bp = bq + 1;
                     }
@@ -113,13 +113,13 @@ internal static class Tokenizer
             if (sep == '+')
             {
                 int startB = j + 1;
-                var build = s.Slice(startB);
+                ReadOnlySpan<char> build = s.Slice(startB);
                 int bp = 0;
                 while (bp < build.Length)
                 {
                     int bq = bp;
                     while (bq < build.Length && build[bq] != '.') bq++;
-                    var bsub = build.Slice(bp, bq - bp);
+                    ReadOnlySpan<char> bsub = build.Slice(bp, bq - bp);
                     list.Add(new VersionToken(bsub.ToString(), VersionTokenKind.BuildMetadata));
                     bp = bq + 1;
                 }
@@ -154,7 +154,7 @@ internal static class Tokenizer
             if (_count >= _array.Length)
             {
                 // Grow the array
-                var newArr = ArrayPool<T>.Shared.Rent(_array.Length * 2);
+                T[] newArr = ArrayPool<T>.Shared.Rent(_array.Length * 2);
                 Array.Copy(_array, 0, newArr, 0, _array.Length);
                 ArrayPool<T>.Shared.Return(_array, clearArray: true);
                 _array = newArr;
@@ -168,7 +168,7 @@ internal static class Tokenizer
         public T[] ToArray()
         {
             if (_array == null || _count == 0) return [];
-            var result = new T[_count];
+            T[] result = new T[_count];
             Array.Copy(_array, 0, result, 0, _count);
             ArrayPool<T>.Shared.Return(_array, clearArray: true);
             _array = null;

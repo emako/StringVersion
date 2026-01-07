@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace System.StringVersion;
 
@@ -18,8 +19,8 @@ public sealed class SemVerCompareStrategy : IVersionCompareStrategy
     /// </summary>
     public int Compare(in VersionToken[] a, in VersionToken[] b)
     {
-        var arrA = a ?? [];
-        var arrB = b ?? [];
+        VersionToken[] arrA = a ?? [];
+        VersionToken[] arrB = b ?? [];
         int la = arrA.Length;
         int lb = arrB.Length;
 
@@ -52,8 +53,8 @@ public sealed class SemVerCompareStrategy : IVersionCompareStrategy
         if (hasPreA && hasPreB)
         {
             // Collect pre-release sequences
-            var seqA = new System.Collections.Generic.List<VersionToken>();
-            var seqB = new System.Collections.Generic.List<VersionToken>();
+            List<VersionToken> seqA = [];
+            List<VersionToken> seqB = [];
             for (int i = 0; i < la; i++) if (arrA[i].Kind == VersionTokenKind.PreRelease) seqA.Add(arrA[i]);
             for (int i = 0; i < lb; i++) if (arrB[i].Kind == VersionTokenKind.PreRelease) seqB.Add(arrB[i]);
 
@@ -61,8 +62,8 @@ public sealed class SemVerCompareStrategy : IVersionCompareStrategy
             int m = Math.Min(sa, sb);
             for (int i = 0; i < m; i++)
             {
-                var ta = seqA[i];
-                var tb = seqB[i];
+                VersionToken ta = seqA[i];
+                VersionToken tb = seqB[i];
                 bool aIsNumeric = ta.Text is null && ta.Kind == VersionTokenKind.PreRelease;
                 bool bIsNumeric = tb.Text is null && tb.Kind == VersionTokenKind.PreRelease;
                 if (aIsNumeric && bIsNumeric)

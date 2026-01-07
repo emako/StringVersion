@@ -28,12 +28,12 @@ public partial class StringVersion(VersionToken[] tokens, string original, IVers
 
         try
         {
-            var span = s.AsSpan();
-            var tokens = Tokenizer.Tokenize(span);
+            ReadOnlySpan<char> span = s.AsSpan();
+            VersionToken[] tokens = Tokenizer.Tokenize(span);
 
             // Simple recognition: if contains pre-release or build -> semver strategy
             bool hasPre = false, hasBuild = false;
-            foreach (var t in tokens)
+            foreach (VersionToken t in tokens)
             {
                 if (t.Kind == VersionTokenKind.PreRelease) hasPre = true;
                 if (t.Kind == VersionTokenKind.BuildMetadata) hasBuild = true;
@@ -55,7 +55,7 @@ public partial class StringVersion(VersionToken[] tokens, string original, IVers
     /// </summary>
     public static StringVersion Parse(string s)
     {
-        if (TryParse(s, out var v) && v is not null) return v;
+        if (TryParse(s, out StringVersion? v) && v is not null) return v;
         throw new FormatException("Invalid version string");
     }
 
@@ -101,7 +101,7 @@ public partial class StringVersion(VersionToken[] tokens, string original, IVers
         int h = 17;
         for (int i = 0; i < Math.Min(4, _tokens.Length); i++)
         {
-            var t = _tokens[i];
+            VersionToken t = _tokens[i];
             h = h * 31 + (t.Kind.GetHashCode() * 397);
             if (t.Kind == VersionTokenKind.Numeric) h = h * 31 + t.Numeric.GetHashCode(); else h = h * 31 + (t.Text?.GetHashCode() ?? 0);
         }
