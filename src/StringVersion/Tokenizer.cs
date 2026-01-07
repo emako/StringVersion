@@ -1,0 +1,166 @@
+using System.Buffers;
+using System.Runtime.CompilerServices;
+
+namespace System.StringVersion;
+
+internal static class Tokenizer
+{
+    public static VersionToken[] Tokenize(ReadOnlySpan<char> s)
+    {
+        if (s.Length == 0) return Array.Empty<VersionToken>();
+
+        // Find first digit — this is the start of the version substring.
+        int len = s.Length;
+        int start = -1;
+        for (int i = 0; i < len; i++)
+        {
+            if (char.IsDigit(s[i])) { start = i; break; }
+        }
+
+        if (start < 0) return Array.Empty<VersionToken>();
+
+        // Slice to candidate version substring
+        s = s.Slice(start);
+
+        // trim surrounding whitespace
+        while (s.Length > 0 && char.IsWhiteSpace(s[0])) s = s.Slice(1);
+        while (s.Length > 0 && char.IsWhiteSpace(s[s.Length - 1])) s = s.Slice(0, s.Length - 1);
+
+        // If the version substring was preceded by a 'v' or 'V' (e.g. "V1.2"),
+        // starting from the first digit already removes it; no explicit check needed.
+
+        var list = new PooledList<VersionToken>();
+        int iIdx = 0;
+        while (iIdx < s.Length)
+        {
+            int j = iIdx;
+            // read until separator
+            while (j < s.Length && s[j] != '.' && s[j] != '-' && s[j] != '+') j++;
+
+            var seg = s.Slice(iIdx, j - iIdx);
+            if (seg.Length > 0)
+            {
+                // numeric?
+                bool allDigits = true;
+                long value = 0;
+                for (int k = 0; k < seg.Length; k++)
+                {
+                    char c = seg[k];
+                    if (c < '0' || c > '9') { allDigits = false; break; }
+                    value = value * 10 + (c - '0');
+                }
+                if (allDigits)
+                {
+                    list.Add(new VersionToken(value));
+                }
+                else
+                {
+                    // allocate only for textual tokens
+                    list.Add(new VersionToken(seg.ToString(), VersionTokenKind.Text));
+                }
+            }
+
+            if (j >= s.Length) break;
+
+            char sep = s[j];
+            // handle pre-release/build metadata
+            if (sep == '-')
+            {
+                int k = j + 1;
+                int startPr = k;
+                while (k < s.Length && s[k] != '+') k++;
+                var pr = s.Slice(startPr, k - startPr);
+                int p = 0;
+                while (p < pr.Length)
+                {
+                    int q = p;
+                    while (q < pr.Length && pr[q] != '.') q++;
+                    var sub = pr.Slice(p, q - p);
+                    bool digits = true; long val = 0;
+                    for (int x = 0; x < sub.Length; x++)
+                    {
+                        char c = sub[x];
+                        if (c < '0' || c > '9') { digits = false; break; }
+                        val = val * 10 + (c - '0');
+                    }
+                    if (digits) list.Add(new VersionToken(val, VersionTokenKind.PreRelease)); else list.Add(new VersionToken(sub.ToString(), VersionTokenKind.PreRelease));
+                    p = q + 1;
+                }
+                iIdx = j + 1 + pr.Length;
+                if (iIdx < s.Length && s[iIdx] == '+')
+                {
+                    int bstart = iIdx + 1;
+                    var build = s.Slice(bstart);
+                    int bp = 0;
+                    while (bp < build.Length)
+                    {
+                        int bq = bp;
+                        while (bq < build.Length && build[bq] != '.') bq++;
+                        var bsub = build.Slice(bp, bq - bp);
+                        list.Add(new VersionToken(bsub.ToString(), VersionTokenKind.BuildMetadata));
+                        bp = bq + 1;
+                    }
+                    break;
+                }
+                continue;
+            }
+
+            if (sep == '+')
+            {
+                int startB = j + 1;
+                var build = s.Slice(startB);
+                int bp = 0;
+                while (bp < build.Length)
+                {
+                    int bq = bp;
+                    while (bq < build.Length && build[bq] != '.') bq++;
+                    var bsub = build.Slice(bp, bq - bp);
+                    list.Add(new VersionToken(bsub.ToString(), VersionTokenKind.BuildMetadata));
+                    bp = bq + 1;
+                }
+                break;
+            }
+
+            // '.' separator -> continue
+            iIdx = j + 1;
+        }
+
+        return list.ToArray();
+    }
+
+    // Lightweight pooled list to reduce allocations during tokenization.
+    private struct PooledList<T>
+    {
+        private T[]? _array;
+        private int _count;
+
+        public void Add(T item)
+        {
+            if (_array == null)
+            {
+                _array = ArrayPool<T>.Shared.Rent(8);
+                _count = 0;
+            }
+            if (_count >= _array.Length)
+            {
+                // grow
+                var newArr = ArrayPool<T>.Shared.Rent(_array.Length * 2);
+                Array.Copy(_array, 0, newArr, 0, _array.Length);
+                ArrayPool<T>.Shared.Return(_array, clearArray: true);
+                _array = newArr;
+            }
+            _array[_count++] = item;
+        }
+
+        public T[] ToArray()
+        {
+            if (_array == null || _count == 0) return Array.Empty<T>();
+            var result = new T[_count];
+            Array.Copy(_array, 0, result, 0, _count);
+            ArrayPool<T>.Shared.Return(_array, clearArray: true);
+            _array = null;
+            _count = 0;
+            return result;
+        }
+    }
+}
