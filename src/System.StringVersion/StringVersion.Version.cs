@@ -44,4 +44,12 @@ public partial class StringVersion
 
     public static bool operator !=(StringVersion? a, Version? b)
         => !(a == b);
+
+    /// <summary>
+    /// Implicit conversion from System.Version to StringVersion.
+    /// </summary>
+    public static implicit operator StringVersion(Version v)
+    {
+        return new StringVersion(v.ToString());
+    }
 }
