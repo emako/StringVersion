@@ -2,12 +2,12 @@ namespace System.StringVersion;
 
 public sealed class DefaultCompareStrategy : IVersionCompareStrategy
 {
-    public static DefaultCompareStrategy Instance { get; } = new DefaultCompareStrategy();
+    public static DefaultCompareStrategy Instance { get; } = new();
 
     public int Compare(in VersionToken[] a, in VersionToken[] b)
     {
-        var arrA = a ?? Array.Empty<VersionToken>();
-        var arrB = b ?? Array.Empty<VersionToken>();
+        var arrA = a ?? [];
+        var arrB = b ?? [];
         int na = arrA.Length;
         int nb = arrB.Length;
         int n = Math.Max(na, nb);

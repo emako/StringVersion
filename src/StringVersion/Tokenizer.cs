@@ -1,5 +1,4 @@
 using System.Buffers;
-using System.Runtime.CompilerServices;
 
 namespace System.StringVersion;
 
@@ -7,7 +6,7 @@ internal static class Tokenizer
 {
     public static VersionToken[] Tokenize(ReadOnlySpan<char> s)
     {
-        if (s.Length == 0) return Array.Empty<VersionToken>();
+        if (s.Length == 0) return [];
 
         // Find first digit — this is the start of the version substring.
         int len = s.Length;
@@ -17,7 +16,7 @@ internal static class Tokenizer
             if (char.IsDigit(s[i])) { start = i; break; }
         }
 
-        if (start < 0) return Array.Empty<VersionToken>();
+        if (start < 0) return [];
 
         // Slice to candidate version substring
         s = s.Slice(start);
@@ -154,7 +153,7 @@ internal static class Tokenizer
 
         public T[] ToArray()
         {
-            if (_array == null || _count == 0) return Array.Empty<T>();
+            if (_array == null || _count == 0) return [];
             var result = new T[_count];
             Array.Copy(_array, 0, result, 0, _count);
             ArrayPool<T>.Shared.Return(_array, clearArray: true);

@@ -1,5 +1,0 @@
-<Solution>
-  <Project Path="src/StringVersion.Benchmarks/StringVersion.Benchmarks.csproj" />
-  <Project Path="src/StringVersion.Tests/StringVersion.Tests.csproj" />
-  <Project Path="src/StringVersion/StringVersion.csproj" />
-</Solution>

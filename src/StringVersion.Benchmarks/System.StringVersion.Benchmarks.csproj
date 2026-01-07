@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StringVersion\StringVersion.csproj" />
+    <ProjectReference Include="..\StringVersion\System.StringVersion.csproj" />
     <PackageReference Include="BenchmarkDotNet" Version="0.13.7" />
   </ItemGroup>
 </Project>

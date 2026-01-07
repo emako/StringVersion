@@ -1,17 +1,12 @@
 namespace System.StringVersion;
 
-public sealed class StringVersion : IComparable<StringVersion>, IEquatable<StringVersion>
+public sealed class StringVersion(VersionToken[] tokens, string original, IVersionCompareStrategy? strategy = null) : IComparable<StringVersion>, IEquatable<StringVersion>
 {
-    private readonly VersionToken[] _tokens;
-    public string Original { get; }
-    public IVersionCompareStrategy Strategy { get; }
+    private readonly VersionToken[] _tokens = tokens ?? [];
 
-    public StringVersion(VersionToken[] tokens, string original, IVersionCompareStrategy? strategy = null)
-    {
-        _tokens = tokens ?? Array.Empty<VersionToken>();
-        Original = original ?? string.Empty;
-        Strategy = strategy ?? DefaultCompareStrategy.Instance;
-    }
+    public string Original { get; } = original ?? string.Empty;
+
+    public IVersionCompareStrategy Strategy { get; } = strategy ?? DefaultCompareStrategy.Instance;
 
     public static bool TryParse(string? s, out StringVersion? result, IVersionCompareStrategy? strategy = null)
     {
