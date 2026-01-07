@@ -22,21 +22,100 @@ dotnet add package StringVersion
 
 ## Usage
 
+### Basic Construction & Parsing
+
 ```csharp
 using System.StringVersion;
 
+// Construct directly
 var v1 = new StringVersion("1.2.3-beta");
+
+// Parse (throws on invalid input)
 var v2 = StringVersion.Parse("1.2.3");
 
+// TryParse (safe, returns bool)
+if (StringVersion.TryParse("2.0.0-rc1", out var v3))
+    Console.WriteLine($"Parsed: {v3}");
+
+// ToString
+Console.WriteLine(v1.ToString()); // Output: 1.2.3-beta
+```
+
+### Comparison
+
+```csharp
+// Operator overloads
 if (v1 < v2)
     Console.WriteLine($"{v1} is less than {v2}");
+if (v1 == v2)
+    Console.WriteLine("Equal");
 
-// TryParse
-if (StringVersion.TryParse("2.0.0-rc1", out var v3))
-    Console.WriteLine(v3);
+// CompareTo
+int cmp = v1.CompareTo(v2); // -1, 0, 1
 
-// Custom strategy (implement IVersionCompareStrategy)
+// Equals
+bool eq = v1.Equals(v2);
 ```
+
+#### Supported Operators
+- `==`, `!=`
+- `<`, `>`, `<=`, `>=`
+
+```csharp
+if (v1 >= v2) { /* ... */ }
+```
+
+### Semantic Versioning (SemVer) & Other Formats
+
+```csharp
+var semver1 = new StringVersion("1.2.3-alpha.1");
+var semver2 = new StringVersion("1.2.3-alpha.2");
+Console.WriteLine(semver1 < semver2); // True
+
+// Date-based or custom versions
+var dateVer = new StringVersion("2023.01.01");
+```
+
+### Custom Comparison Strategy
+
+Implement `IVersionCompareStrategy` to define your own comparison logic:
+
+```csharp
+public class MyStrategy : IVersionCompareStrategy
+{
+    public int Compare(ReadOnlySpan<StringToken> x, ReadOnlySpan<StringToken> y)
+    {
+        // Custom comparison logic
+        return x.Length.CompareTo(y.Length); // Example
+    }
+}
+
+// Use custom strategy
+var custom = new StringVersion("1.2.3", new MyStrategy());
+```
+
+### Advanced Usage
+
+- Supports `IComparable`, `IEquatable`
+- Can be used as dictionary keys or in sets
+- Efficient, allocation-minimizing parsing (Span-based)
+- Handles versions with prefixes, suffixes, and various delimiters
+
+```csharp
+// Sorting
+var versions = new[] {
+    new StringVersion("1.0.0"),
+    new StringVersion("1.0.0-beta"),
+    new StringVersion("2.0.0")
+};
+Array.Sort(versions);
+
+// Dictionary usage
+var dict = new Dictionary<StringVersion, string>();
+dict[new StringVersion("1.0.0")] = "Release 1";
+```
+
+For more details and extension scenarios, see the source code and interface definitions.
 
 ## Project Structure
 
