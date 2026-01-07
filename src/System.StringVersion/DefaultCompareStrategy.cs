@@ -3,7 +3,7 @@ namespace System.StringVersion;
 /// <summary>
 /// Default version comparison strategy, compares numeric and text tokens in order.
 /// </summary>
-public sealed class DefaultCompareStrategy : IVersionCompareStrategy
+public class DefaultCompareStrategy : IVersionCompareStrategy
 {
     /// <summary>
     /// Singleton instance of the default compare strategy.
@@ -13,7 +13,7 @@ public sealed class DefaultCompareStrategy : IVersionCompareStrategy
     /// <summary>
     /// Compares two arrays of version tokens using default rules.
     /// </summary>
-    public int Compare(in VersionToken[] a, in VersionToken[] b)
+    public virtual int Compare(in VersionToken[] a, in VersionToken[] b)
     {
         VersionToken[] arrA = a ?? [];
         VersionToken[] arrB = b ?? [];

@@ -6,7 +6,7 @@ namespace System.StringVersion;
 /// Semantic Versioning (SemVer) comparison strategy implementation.
 /// Handles core, pre-release, and build metadata precedence.
 /// </summary>
-public sealed class SemVerCompareStrategy : IVersionCompareStrategy
+public class SemVerCompareStrategy : IVersionCompareStrategy
 {
     /// <summary>
     /// Singleton instance of the SemVer compare strategy.
@@ -16,7 +16,7 @@ public sealed class SemVerCompareStrategy : IVersionCompareStrategy
     /// <summary>
     /// Compares two arrays of version tokens using SemVer rules.
     /// </summary>
-    public int Compare(in VersionToken[] a, in VersionToken[] b)
+    public virtual int Compare(in VersionToken[] a, in VersionToken[] b)
     {
         VersionToken[] arrA = a ?? [];
         VersionToken[] arrB = b ?? [];
