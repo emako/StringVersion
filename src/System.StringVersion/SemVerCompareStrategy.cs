@@ -2,10 +2,20 @@ using System;
 
 namespace System.StringVersion;
 
+/// <summary>
+/// Semantic Versioning (SemVer) comparison strategy implementation.
+/// Handles core, pre-release, and build metadata precedence.
+/// </summary>
 public sealed class SemVerCompareStrategy : IVersionCompareStrategy
 {
+    /// <summary>
+    /// Singleton instance of the SemVer compare strategy.
+    /// </summary>
     public static SemVerCompareStrategy Instance { get; } = new SemVerCompareStrategy();
 
+    /// <summary>
+    /// Compares two arrays of version tokens using SemVer rules.
+    /// </summary>
     public int Compare(in VersionToken[] a, in VersionToken[] b)
     {
         var arrA = a ?? [];
@@ -13,7 +23,7 @@ public sealed class SemVerCompareStrategy : IVersionCompareStrategy
         int la = arrA.Length;
         int lb = arrB.Length;
 
-        // find core numeric length
+        // Find core numeric length
         int coreA = 0;
         while (coreA < la && arrA[coreA].Kind == VersionTokenKind.Numeric) coreA++;
         int coreB = 0;
@@ -41,7 +51,7 @@ public sealed class SemVerCompareStrategy : IVersionCompareStrategy
 
         if (hasPreA && hasPreB)
         {
-            // collect pre-release sequences
+            // Collect pre-release sequences
             var seqA = new System.Collections.Generic.List<VersionToken>();
             var seqB = new System.Collections.Generic.List<VersionToken>();
             for (int i = 0; i < la; i++) if (arrA[i].Kind == VersionTokenKind.PreRelease) seqA.Add(arrA[i]);
@@ -69,7 +79,7 @@ public sealed class SemVerCompareStrategy : IVersionCompareStrategy
             if (sa != sb) return sa > sb ? 1 : -1;
         }
 
-        // ignore build metadata for precedence
+        // Ignore build metadata for precedence
         return 0;
     }
 }

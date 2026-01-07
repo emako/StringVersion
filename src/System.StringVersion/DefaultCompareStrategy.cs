@@ -1,37 +1,45 @@
 namespace System.StringVersion;
 
+/// <summary>
+/// Default version comparison strategy, compares numeric and text tokens in order.
+/// </summary>
 public sealed class DefaultCompareStrategy : IVersionCompareStrategy
 {
-    public static DefaultCompareStrategy Instance { get; } = new();
+    /// <summary>
+    /// Singleton instance of the default compare strategy.
+    /// </summary>
+    public static DefaultCompareStrategy Instance { get; } = new DefaultCompareStrategy();
 
+    /// <summary>
+    /// Compares two arrays of version tokens using default rules.
+    /// </summary>
     public int Compare(in VersionToken[] a, in VersionToken[] b)
     {
         var arrA = a ?? [];
         var arrB = b ?? [];
-        int na = arrA.Length;
-        int nb = arrB.Length;
-        int n = Math.Max(na, nb);
-        for (int i = 0; i < n; i++)
+        int la = arrA.Length;
+        int lb = arrB.Length;
+        int max = Math.Max(la, lb);
+        for (int i = 0; i < max; i++)
         {
-            VersionToken ta = i < na ? arrA[i] : new VersionToken(0);
-            VersionToken tb = i < nb ? arrB[i] : new VersionToken(0);
-
-            if (ta.Kind == VersionTokenKind.Numeric && tb.Kind == VersionTokenKind.Numeric)
+            if (i >= la) return -1;
+            if (i >= lb) return 1;
+            var ta = arrA[i];
+            var tb = arrB[i];
+            if (ta.Kind != tb.Kind)
             {
-                if (ta.Numeric != tb.Numeric)
-                    return ta.Numeric > tb.Numeric ? 1 : -1;
-                continue;
+                // Numeric tokens have higher precedence than text tokens
+                return ta.Kind == VersionTokenKind.Numeric ? 1 : -1;
             }
-
-            // Numeric beats text
-            if (ta.Kind == VersionTokenKind.Numeric && tb.Kind != VersionTokenKind.Numeric) return 1;
-            if (tb.Kind == VersionTokenKind.Numeric && ta.Kind != VersionTokenKind.Numeric) return -1;
-
-            // Textual comparison
-            string sa = ta.Text ?? string.Empty;
-            string sb = tb.Text ?? string.Empty;
-            int cmp = StringComparer.OrdinalIgnoreCase.Compare(sa, sb);
-            if (cmp != 0) return cmp;
+            if (ta.Kind == VersionTokenKind.Numeric)
+            {
+                if (ta.Numeric != tb.Numeric) return ta.Numeric > tb.Numeric ? 1 : -1;
+            }
+            else
+            {
+                int cmp = StringComparer.OrdinalIgnoreCase.Compare(ta.Text ?? string.Empty, tb.Text ?? string.Empty);
+                if (cmp != 0) return cmp;
+            }
         }
         return 0;
     }

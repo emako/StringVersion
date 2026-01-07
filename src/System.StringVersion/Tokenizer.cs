@@ -2,8 +2,18 @@ using System.Buffers;
 
 namespace System.StringVersion;
 
+/// <summary>
+/// Tokenizer for parsing version strings into VersionToken arrays.
+/// Handles numeric, text, pre-release, and build metadata tokens.
+/// </summary>
 internal static class Tokenizer
 {
+    /// <summary>
+    /// Tokenizes a version string span into an array of VersionToken.
+    /// Supports separators: '.', '-', '_', '+', and space for suffix filtering.
+    /// </summary>
+    /// <param name="s">The input version string span.</param>
+    /// <returns>Array of VersionToken representing the parsed version.</returns>
     public static VersionToken[] Tokenize(ReadOnlySpan<char> s)
     {
         if (s.Length == 0) return [];
@@ -21,7 +31,7 @@ internal static class Tokenizer
         // Slice to candidate version substring
         s = s.Slice(start);
 
-        // trim surrounding whitespace
+        // Trim surrounding whitespace
         while (s.Length > 0 && char.IsWhiteSpace(s[0])) s = s.Slice(1);
         while (s.Length > 0 && char.IsWhiteSpace(s[s.Length - 1])) s = s.Slice(0, s.Length - 1);
 
@@ -30,13 +40,13 @@ internal static class Tokenizer
         while (iIdx < s.Length)
         {
             int j = iIdx;
-            // read until separator
+            // Read until separator
             while (j < s.Length && s[j] != '.' && s[j] != '-' && s[j] != '+' && s[j] != '_' && s[j] != ' ') j++;
 
             var seg = s.Slice(iIdx, j - iIdx);
             if (seg.Length > 0)
             {
-                // numeric?
+                // Check if segment is all digits (numeric token)
                 bool allDigits = true;
                 long value = 0;
                 for (int k = 0; k < seg.Length; k++)
@@ -58,7 +68,7 @@ internal static class Tokenizer
             if (j >= s.Length) break;
 
             char sep = s[j];
-            // handle pre-release/build metadata
+            // Handle pre-release or build metadata
             if (sep == '-' || sep == '_')
             {
                 int k = j + 1;
@@ -123,12 +133,17 @@ internal static class Tokenizer
         return list.ToArray();
     }
 
-    // Lightweight pooled list to reduce allocations during tokenization.
+    /// <summary>
+    /// Lightweight pooled list to reduce allocations during tokenization.
+    /// </summary>
     private struct PooledList<T>
     {
         private T[]? _array;
         private int _count;
 
+        /// <summary>
+        /// Adds an item to the pooled list.
+        /// </summary>
         public void Add(T item)
         {
             if (_array == null)
@@ -138,7 +153,7 @@ internal static class Tokenizer
             }
             if (_count >= _array.Length)
             {
-                // grow
+                // Grow the array
                 var newArr = ArrayPool<T>.Shared.Rent(_array.Length * 2);
                 Array.Copy(_array, 0, newArr, 0, _array.Length);
                 ArrayPool<T>.Shared.Return(_array, clearArray: true);
@@ -147,6 +162,9 @@ internal static class Tokenizer
             _array[_count++] = item;
         }
 
+        /// <summary>
+        /// Converts the pooled list to an array and returns the pooled array.
+        /// </summary>
         public T[] ToArray()
         {
             if (_array == null || _count == 0) return [];

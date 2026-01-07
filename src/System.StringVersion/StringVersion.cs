@@ -1,13 +1,26 @@
 namespace System.StringVersion;
 
+/// <summary>
+/// Represents a parsed version string with comparison and equality logic.
+/// Supports custom comparison strategies and implicit conversion from string.
+/// </summary>
 public partial class StringVersion(VersionToken[] tokens, string original, IVersionCompareStrategy? strategy = null) : IComparable<StringVersion>, IEquatable<StringVersion>
 {
     private readonly VersionToken[] _tokens = tokens ?? [];
 
+    /// <summary>
+    /// The original version string.
+    /// </summary>
     public string Original { get; } = original ?? string.Empty;
 
+    /// <summary>
+    /// The comparison strategy used for this version.
+    /// </summary>
     public IVersionCompareStrategy Strategy { get; } = strategy ?? DefaultCompareStrategy.Instance;
 
+    /// <summary>
+    /// Attempts to parse a version string into a StringVersion instance.
+    /// </summary>
     public static bool TryParse(string? s, out StringVersion? result, IVersionCompareStrategy? strategy = null)
     {
         result = null;
@@ -18,7 +31,7 @@ public partial class StringVersion(VersionToken[] tokens, string original, IVers
             var span = s.AsSpan();
             var tokens = Tokenizer.Tokenize(span);
 
-            // simple recognition: if contains pre-release or build -> semver strategy
+            // Simple recognition: if contains pre-release or build -> semver strategy
             bool hasPre = false, hasBuild = false;
             foreach (var t in tokens)
             {
@@ -37,18 +50,27 @@ public partial class StringVersion(VersionToken[] tokens, string original, IVers
         }
     }
 
+    /// <summary>
+    /// Parses a version string into a StringVersion instance, or throws if invalid.
+    /// </summary>
     public static StringVersion Parse(string s)
     {
         if (TryParse(s, out var v) && v is not null) return v;
         throw new FormatException("Invalid version string");
     }
 
+    /// <summary>
+    /// Compares this version to another StringVersion.
+    /// </summary>
     public int CompareTo(StringVersion? other)
     {
         if (other is null) return 1;
         return Strategy.Compare(_tokens, other._tokens);
     }
 
+    /// <summary>
+    /// Checks equality with another object (StringVersion, Version, or tuple).
+    /// </summary>
     public override bool Equals(object? obj)
     {
         return obj switch
@@ -61,15 +83,21 @@ public partial class StringVersion(VersionToken[] tokens, string original, IVers
         };
     }
 
+    /// <summary>
+    /// Checks equality with another StringVersion.
+    /// </summary>
     public bool Equals(StringVersion? other)
     {
         if (other is null) return false;
         return CompareTo(other) == 0;
     }
 
+    /// <summary>
+    /// Gets a hash code for this version.
+    /// </summary>
     public override int GetHashCode()
     {
-        // simple hash combining first few tokens
+        // Simple hash combining first few tokens
         int h = 17;
         for (int i = 0; i < Math.Min(4, _tokens.Length); i++)
         {
@@ -80,8 +108,14 @@ public partial class StringVersion(VersionToken[] tokens, string original, IVers
         return h;
     }
 
+    /// <summary>
+    /// Returns the original version string.
+    /// </summary>
     public override string ToString() => Original;
 
+    /// <summary>
+    /// Implicit conversion from string to StringVersion.
+    /// </summary>
     public static implicit operator StringVersion(string s)
     {
         return Parse(s);
