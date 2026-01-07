@@ -38,9 +38,12 @@ public sealed class StringVersionTests
     [Fact]
     public void PreReleaseOrdering()
     {
-        _ = StringVersion.TryParse("1.0-beta", out var v1);
-        _ = StringVersion.TryParse("1.0-rc", out var v2);
-        _ = StringVersion.TryParse("1.0", out var v3);
+        Assert.True(StringVersion.TryParse("1.0-beta", out var v1));
+        Assert.True(StringVersion.TryParse("1.0-rc", out var v2));
+        Assert.True(StringVersion.TryParse("1.0", out var v3));
+        Assert.NotNull(v1);
+        Assert.NotNull(v2);
+        Assert.NotNull(v3);
         Assert.True(v1!.CompareTo(v2!) < 0);
         Assert.True(v2!.CompareTo(v3!) < 0);
     }
