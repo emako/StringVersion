@@ -28,10 +28,7 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
     /// <param name="original">The version string to parse.</param>
     public StringVersion(string? original)
     {
-        if (string.IsNullOrWhiteSpace(original))
-            throw new FormatException("Invalid version string");
-        VersionToken[] tokens = Tokenizer.Tokenize(original.AsSpan());
-        Tokens = tokens;
+        Tokens = string.IsNullOrWhiteSpace(original) ? [] : Tokenizer.Tokenize(original.AsSpan());
         Original = original ?? string.Empty;
         Strategy = SemVerCompareStrategy.Instance;
     }
