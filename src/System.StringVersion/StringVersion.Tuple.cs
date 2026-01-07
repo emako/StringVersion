@@ -35,113 +35,113 @@ public partial class StringVersion
     public bool Equals(Tuple<int, int, int, int> tuple)
         => CompareTo(tuple) == 0;
 
-    public static bool operator >(StringVersion a, (int, int) b)
-        => a.CompareTo(b) > 0;
+    public static bool operator >(StringVersion left, (int, int) right)
+        => left.CompareTo(right) > 0;
 
-    public static bool operator <(StringVersion a, (int, int) b)
-        => a.CompareTo(b) < 0;
+    public static bool operator <(StringVersion left, (int, int) right)
+        => left.CompareTo(right) < 0;
 
-    public static bool operator >=(StringVersion a, (int, int) b)
-        => a.CompareTo(b) >= 0;
+    public static bool operator >=(StringVersion left, (int, int) right)
+        => left.CompareTo(right) >= 0;
 
-    public static bool operator <=(StringVersion a, (int, int) b)
-        => a.CompareTo(b) <= 0;
+    public static bool operator <=(StringVersion left, (int, int) right)
+        => left.CompareTo(right) <= 0;
 
-    public static bool operator ==(StringVersion? a, (int, int) b)
-        => a is not null && a.CompareTo(b) == 0;
+    public static bool operator ==(StringVersion? left, (int, int) right)
+        => left is not null && left.CompareTo(right) == 0;
 
-    public static bool operator !=(StringVersion? a, (int, int) b)
-        => !(a == b);
+    public static bool operator !=(StringVersion? left, (int, int) right)
+        => !(left == right);
 
-    public static bool operator >(StringVersion a, (int, int, int) b)
-        => a.CompareTo(b) > 0;
+    public static bool operator >(StringVersion left, (int, int, int) right)
+        => left.CompareTo(right) > 0;
 
-    public static bool operator <(StringVersion a, (int, int, int) b)
-        => a.CompareTo(b) < 0;
+    public static bool operator <(StringVersion left, (int, int, int) right)
+        => left.CompareTo(right) < 0;
 
-    public static bool operator >=(StringVersion a, (int, int, int) b)
-        => a.CompareTo(b) >= 0;
+    public static bool operator >=(StringVersion left, (int, int, int) right)
+        => left.CompareTo(right) >= 0;
 
-    public static bool operator <=(StringVersion a, (int, int, int) b)
-        => a.CompareTo(b) <= 0;
+    public static bool operator <=(StringVersion left, (int, int, int) right)
+        => left.CompareTo(right) <= 0;
 
-    public static bool operator ==(StringVersion? a, (int, int, int) b)
-        => a is not null && a.CompareTo(b) == 0;
+    public static bool operator ==(StringVersion? left, (int, int, int) right)
+        => left is not null && left.CompareTo(right) == 0;
 
-    public static bool operator !=(StringVersion? a, (int, int, int) b)
-        => !(a == b);
+    public static bool operator !=(StringVersion? left, (int, int, int) right)
+        => !(left == right);
 
-    public static bool operator >(StringVersion a, (int, int, int, int) b)
-        => a.CompareTo(b) > 0;
+    public static bool operator >(StringVersion left, (int, int, int, int) right)
+        => left.CompareTo(right) > 0;
 
-    public static bool operator <(StringVersion a, (int, int, int, int) b)
-        => a.CompareTo(b) < 0;
+    public static bool operator <(StringVersion left, (int, int, int, int) right)
+        => left.CompareTo(right) < 0;
 
-    public static bool operator >=(StringVersion a, (int, int, int, int) b)
-        => a.CompareTo(b) >= 0;
+    public static bool operator >=(StringVersion left, (int, int, int, int) right)
+        => left.CompareTo(right) >= 0;
 
-    public static bool operator <=(StringVersion a, (int, int, int, int) b)
-        => a.CompareTo(b) <= 0;
+    public static bool operator <=(StringVersion left, (int, int, int, int) right)
+        => left.CompareTo(right) <= 0;
 
-    public static bool operator ==(StringVersion? a, (int, int, int, int) b)
-        => a is not null && a.CompareTo(b) == 0;
+    public static bool operator ==(StringVersion? left, (int, int, int, int) right)
+        => left is not null && left.CompareTo(right) == 0;
 
-    public static bool operator !=(StringVersion? a, (int, int, int, int) b)
-        => !(a == b);
+    public static bool operator !=(StringVersion? left, (int, int, int, int) right)
+        => !(left == right);
 
-    public static bool operator >(StringVersion a, Tuple<int, int> b)
-        => a.CompareTo(b) > 0;
+    public static bool operator >(StringVersion left, Tuple<int, int> right)
+        => left.CompareTo(right) > 0;
 
-    public static bool operator <(StringVersion a, Tuple<int, int> b)
-        => a.CompareTo(b) < 0;
+    public static bool operator <(StringVersion left, Tuple<int, int> right)
+        => left.CompareTo(right) < 0;
 
-    public static bool operator >=(StringVersion a, Tuple<int, int> b)
-        => a.CompareTo(b) >= 0;
+    public static bool operator >=(StringVersion left, Tuple<int, int> right)
+        => left.CompareTo(right) >= 0;
 
-    public static bool operator <=(StringVersion a, Tuple<int, int> b)
-        => a.CompareTo(b) <= 0;
+    public static bool operator <=(StringVersion left, Tuple<int, int> right)
+        => left.CompareTo(right) <= 0;
 
-    public static bool operator ==(StringVersion? a, Tuple<int, int> b)
-        => a is not null && a.CompareTo(b) == 0;
+    public static bool operator ==(StringVersion? left, Tuple<int, int> right)
+        => left is not null && left.CompareTo(right) == 0;
 
-    public static bool operator !=(StringVersion? a, Tuple<int, int> b)
-        => !(a == b);
+    public static bool operator !=(StringVersion? left, Tuple<int, int> right)
+        => !(left == right);
 
-    public static bool operator >(StringVersion a, Tuple<int, int, int> b)
-        => a.CompareTo(b) > 0;
+    public static bool operator >(StringVersion left, Tuple<int, int, int> right)
+        => left.CompareTo(right) > 0;
 
-    public static bool operator <(StringVersion a, Tuple<int, int, int> b)
-        => a.CompareTo(b) < 0;
+    public static bool operator <(StringVersion left, Tuple<int, int, int> right)
+        => left.CompareTo(right) < 0;
 
-    public static bool operator >=(StringVersion a, Tuple<int, int, int> b)
-        => a.CompareTo(b) >= 0;
+    public static bool operator >=(StringVersion left, Tuple<int, int, int> right)
+        => left.CompareTo(right) >= 0;
 
-    public static bool operator <=(StringVersion a, Tuple<int, int, int> b)
-        => a.CompareTo(b) <= 0;
+    public static bool operator <=(StringVersion left, Tuple<int, int, int> right)
+        => left.CompareTo(right) <= 0;
 
-    public static bool operator ==(StringVersion? a, Tuple<int, int, int> b)
-        => a is not null && a.CompareTo(b) == 0;
+    public static bool operator ==(StringVersion? left, Tuple<int, int, int> right)
+        => left is not null && left.CompareTo(right) == 0;
 
-    public static bool operator !=(StringVersion? a, Tuple<int, int, int> b)
-        => !(a == b);
+    public static bool operator !=(StringVersion? left, Tuple<int, int, int> right)
+        => !(left == right);
 
-    public static bool operator >(StringVersion a, Tuple<int, int, int, int> b)
-        => a.CompareTo(b) > 0;
+    public static bool operator >(StringVersion left, Tuple<int, int, int, int> right)
+        => left.CompareTo(right) > 0;
 
-    public static bool operator <(StringVersion a, Tuple<int, int, int, int> b)
-        => a.CompareTo(b) < 0;
+    public static bool operator <(StringVersion left, Tuple<int, int, int, int> right)
+        => left.CompareTo(right) < 0;
 
-    public static bool operator >=(StringVersion a, Tuple<int, int, int, int> b)
-        => a.CompareTo(b) >= 0;
+    public static bool operator >=(StringVersion left, Tuple<int, int, int, int> right)
+        => left.CompareTo(right) >= 0;
 
-    public static bool operator <=(StringVersion a, Tuple<int, int, int, int> b)
-        => a.CompareTo(b) <= 0;
+    public static bool operator <=(StringVersion left, Tuple<int, int, int, int> right)
+        => left.CompareTo(right) <= 0;
 
-    public static bool operator ==(StringVersion? a, Tuple<int, int, int, int> b)
-        => a is not null && a.CompareTo(b) == 0;
+    public static bool operator ==(StringVersion? left, Tuple<int, int, int, int> right)
+        => left is not null && left.CompareTo(right) == 0;
 
-    public static bool operator !=(StringVersion? a, Tuple<int, int, int, int> b)
-        => !(a == b);
+    public static bool operator !=(StringVersion? left, Tuple<int, int, int, int> right)
+        => !(left == right);
 
     /// <summary>
     /// Implicit conversion from (int, int) tuple to StringVersion.

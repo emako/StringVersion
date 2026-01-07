@@ -145,25 +145,25 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
         return Parse(s);
     }
 
-    public static bool operator >(StringVersion a, StringVersion b)
-        => a.CompareTo(b) > 0;
+    public static bool operator >(StringVersion left, StringVersion right)
+        => left.CompareTo(right) > 0;
 
-    public static bool operator <(StringVersion a, StringVersion b)
-        => a.CompareTo(b) < 0;
+    public static bool operator <(StringVersion left, StringVersion right)
+        => left.CompareTo(right) < 0;
 
-    public static bool operator >=(StringVersion a, StringVersion b)
-        => a.CompareTo(b) >= 0;
+    public static bool operator >=(StringVersion left, StringVersion right)
+        => left.CompareTo(right) >= 0;
 
-    public static bool operator <=(StringVersion a, StringVersion b)
-        => a.CompareTo(b) <= 0;
+    public static bool operator <=(StringVersion left, StringVersion right)
+        => left.CompareTo(right) <= 0;
 
-    public static bool operator ==(StringVersion? a, StringVersion? b)
+    public static bool operator ==(StringVersion? left, StringVersion? right)
     {
-        if (ReferenceEquals(a, b)) return true;
-        if (a is null || b is null) return false;
-        return a.CompareTo(b) == 0;
+        if (ReferenceEquals(left, right)) return true;
+        if (left is null || right is null) return false;
+        return left.CompareTo(right) == 0;
     }
 
-    public static bool operator !=(StringVersion? a, StringVersion? b)
-        => !(a == b);
+    public static bool operator !=(StringVersion? left, StringVersion? right)
+        => !(left == right);
 }

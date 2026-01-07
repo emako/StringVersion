@@ -27,23 +27,23 @@ public partial class StringVersion
     public bool Equals(Version? other)
         => CompareTo(other) == 0;
 
-    public static bool operator >(StringVersion a, Version b)
-        => a.CompareTo(b) > 0;
+    public static bool operator >(StringVersion left, Version right)
+        => left.CompareTo(right) > 0;
 
-    public static bool operator <(StringVersion a, Version b)
-        => a.CompareTo(b) < 0;
+    public static bool operator <(StringVersion left, Version right)
+        => left.CompareTo(right) < 0;
 
-    public static bool operator >=(StringVersion a, Version b)
-        => a.CompareTo(b) >= 0;
+    public static bool operator >=(StringVersion left, Version right)
+        => left.CompareTo(right) >= 0;
 
-    public static bool operator <=(StringVersion a, Version b)
-        => a.CompareTo(b) <= 0;
+    public static bool operator <=(StringVersion left, Version right)
+        => left.CompareTo(right) <= 0;
 
-    public static bool operator ==(StringVersion? a, Version? b)
-        => a is not null && a.CompareTo(b) == 0;
+    public static bool operator ==(StringVersion? left, Version? right)
+        => left is not null && left.CompareTo(right) == 0;
 
-    public static bool operator !=(StringVersion? a, Version? b)
-        => !(a == b);
+    public static bool operator !=(StringVersion? left, Version? right)
+        => !(left == right);
 
     /// <summary>
     /// Implicit conversion from System.Version to StringVersion.
