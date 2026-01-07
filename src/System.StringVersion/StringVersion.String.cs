@@ -78,7 +78,7 @@ public partial class StringVersion
     /// <returns><c>true</c> if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
     public static bool operator <(StringVersion left, string right)
     {
-        var rightVer = Parse(right);
+        StringVersion rightVer = Parse(right);
         return left.CompareTo(rightVer) < 0;
     }
 
@@ -90,7 +90,7 @@ public partial class StringVersion
     /// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
     public static bool operator >(StringVersion left, string right)
     {
-        var rightVer = Parse(right);
+        StringVersion rightVer = Parse(right);
         return left.CompareTo(rightVer) > 0;
     }
 
@@ -102,7 +102,7 @@ public partial class StringVersion
     /// <returns><c>true</c> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
     public static bool operator <=(StringVersion left, string right)
     {
-        var rightVer = Parse(right);
+        StringVersion rightVer = Parse(right);
         return left.CompareTo(rightVer) <= 0;
     }
 
@@ -114,7 +114,7 @@ public partial class StringVersion
     /// <returns><c>true</c> if <paramref name="left"/> is greater than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
     public static bool operator >=(StringVersion left, string right)
     {
-        var rightVer = Parse(right);
+        StringVersion rightVer = Parse(right);
         return left.CompareTo(rightVer) >= 0;
     }
 
@@ -126,7 +126,7 @@ public partial class StringVersion
     /// <returns><c>true</c> if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
     public static bool operator <(string left, StringVersion right)
     {
-        var leftVer = Parse(left);
+        StringVersion leftVer = Parse(left);
         return leftVer.CompareTo(right) < 0;
     }
 
@@ -138,7 +138,7 @@ public partial class StringVersion
     /// <returns><c>true</c> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
     public static bool operator >(string left, StringVersion right)
     {
-        var leftVer = Parse(left);
+        StringVersion leftVer = Parse(left);
         return leftVer.CompareTo(right) > 0;
     }
 
@@ -150,7 +150,7 @@ public partial class StringVersion
     /// <returns><c>true</c> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
     public static bool operator <=(string left, StringVersion right)
     {
-        var leftVer = Parse(left);
+        StringVersion leftVer = Parse(left);
         return leftVer.CompareTo(right) <= 0;
     }
 
@@ -162,7 +162,7 @@ public partial class StringVersion
     /// <returns><c>true</c> if <paramref name="left"/> is greater than or equal to <paramref name="right"/>; otherwise, <c>false</c>.</returns>
     public static bool operator >=(string left, StringVersion right)
     {
-        var leftVer = Parse(left);
+        StringVersion leftVer = Parse(left);
         return leftVer.CompareTo(right) >= 0;
     }
 }

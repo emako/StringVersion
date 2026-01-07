@@ -20,7 +20,7 @@ public partial class StringVersion
         int[] otherParts = [other.Major, other.Minor, other.Build, other.Revision];
         long[] thisParts = new long[4];
         int i = 0;
-        foreach (var t in _tokens)
+        foreach (VersionToken t in Tokens)
         {
             if (t.Kind == VersionTokenKind.Numeric && i < 4)
             {

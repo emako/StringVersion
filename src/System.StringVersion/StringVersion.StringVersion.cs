@@ -8,7 +8,7 @@ public partial class StringVersion
     public int CompareTo(StringVersion? other)
     {
         if (other is null) return 1;
-        return Strategy.Compare(_tokens, other._tokens);
+        return Strategy.Compare(Tokens, other.Tokens);
     }
 
     /// <summary>

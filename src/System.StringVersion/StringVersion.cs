@@ -6,7 +6,10 @@ namespace System.StringVersion;
 /// </summary>
 public partial class StringVersion : IComparable<StringVersion>, IEquatable<StringVersion>
 {
-    private readonly VersionToken[] _tokens;
+    /// <summary>
+    /// The parsed tokens representing each part of the version string (numeric, text, etc.).
+    /// </summary>
+    public VersionToken[] Tokens { get; }
 
     /// <summary>
     /// The original version string.
@@ -28,7 +31,7 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
         if (string.IsNullOrWhiteSpace(original))
             throw new FormatException("Invalid version string");
         VersionToken[] tokens = Tokenizer.Tokenize(original.AsSpan());
-        _tokens = tokens;
+        Tokens = tokens;
         Original = original ?? string.Empty;
         Strategy = SemVerCompareStrategy.Instance;
     }
@@ -41,7 +44,7 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
     /// <param name="strategy">Comparison strategy (optional).</param>
     public StringVersion(VersionToken[] tokens, string? original, IVersionCompareStrategy? strategy = null)
     {
-        _tokens = tokens ?? [];
+        Tokens = tokens ?? [];
         Original = original ?? string.Empty;
         Strategy = strategy ?? SemVerCompareStrategy.Instance;
     }
@@ -98,9 +101,9 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
     {
         // Simple hash combining first few tokens
         int h = 17;
-        for (int i = 0; i < Math.Min(4, _tokens.Length); i++)
+        for (int i = 0; i < Math.Min(4, Tokens.Length); i++)
         {
-            VersionToken t = _tokens[i];
+            VersionToken t = Tokens[i];
             h = h * 31 + (t.Kind.GetHashCode() * 397);
             if (t.Kind == VersionTokenKind.Numeric) h = h * 31 + t.Numeric.GetHashCode(); else h = h * 31 + (t.Text?.GetHashCode() ?? 0);
         }
