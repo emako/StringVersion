@@ -4,43 +4,64 @@ namespace System.StringVersion;
 /// Represents a parsed version string with comparison and equality logic.
 /// Supports custom comparison strategies and implicit conversion from string.
 /// </summary>
-public partial class StringVersion(VersionToken[] tokens, string original, IVersionCompareStrategy? strategy = null) : IComparable<StringVersion>, IEquatable<StringVersion>
+public partial class StringVersion : IComparable<StringVersion>, IEquatable<StringVersion>
 {
-    private readonly VersionToken[] _tokens = tokens ?? [];
+    private readonly VersionToken[] _tokens;
 
     /// <summary>
     /// The original version string.
     /// </summary>
-    public string Original { get; } = original ?? string.Empty;
+    public string Original { get; }
 
     /// <summary>
     /// The comparison strategy used for this version.
     /// </summary>
-    public IVersionCompareStrategy Strategy { get; } = strategy ?? DefaultCompareStrategy.Instance;
+    public IVersionCompareStrategy Strategy { get; }
+
+    /// <summary>
+    /// Constructs a StringVersion by parsing a version string.
+    /// Throws FormatException if the string is null, empty, or invalid.
+    /// </summary>
+    /// <param name="original">The version string to parse.</param>
+    public StringVersion(string? original)
+    {
+        if (string.IsNullOrWhiteSpace(original))
+            throw new FormatException("Invalid version string");
+        VersionToken[] tokens = Tokenizer.Tokenize(original.AsSpan());
+        _tokens = tokens;
+        Original = original!;
+        bool hasPre = false, hasBuild = false;
+        foreach (VersionToken t in tokens)
+        {
+            if (t.Kind == VersionTokenKind.PreRelease) hasPre = true;
+            if (t.Kind == VersionTokenKind.BuildMetadata) hasBuild = true;
+        }
+        Strategy = hasPre || hasBuild ? SemVerCompareStrategy.Instance : DefaultCompareStrategy.Instance;
+    }
+
+    /// <summary>
+    /// Constructs a StringVersion from tokens, original string, and optional strategy.
+    /// </summary>
+    /// <param name="tokens">Parsed version tokens.</param>
+    /// <param name="original">The original version string.</param>
+    /// <param name="strategy">Comparison strategy (optional).</param>
+    public StringVersion(VersionToken[] tokens, string original, IVersionCompareStrategy? strategy = null)
+    {
+        _tokens = tokens ?? [];
+        Original = original ?? string.Empty;
+        Strategy = strategy ?? DefaultCompareStrategy.Instance;
+    }
 
     /// <summary>
     /// Attempts to parse a version string into a StringVersion instance.
     /// </summary>
-    public static bool TryParse(string? s, out StringVersion? result, IVersionCompareStrategy? strategy = null)
+    public static bool TryParse(string? original, out StringVersion? result, IVersionCompareStrategy? strategy = null)
     {
         result = null;
-        if (string.IsNullOrWhiteSpace(s)) return false;
-
+        if (string.IsNullOrWhiteSpace(original)) return false;
         try
         {
-            ReadOnlySpan<char> span = s.AsSpan();
-            VersionToken[] tokens = Tokenizer.Tokenize(span);
-
-            // Simple recognition: if contains pre-release or build -> semver strategy
-            bool hasPre = false, hasBuild = false;
-            foreach (VersionToken t in tokens)
-            {
-                if (t.Kind == VersionTokenKind.PreRelease) hasPre = true;
-                if (t.Kind == VersionTokenKind.BuildMetadata) hasBuild = true;
-            }
-
-            IVersionCompareStrategy used = strategy ?? (hasPre || hasBuild ? SemVerCompareStrategy.Instance : DefaultCompareStrategy.Instance);
-            result = new StringVersion(tokens, s ?? string.Empty, used);
+            result = new StringVersion(original);
             return true;
         }
         catch
@@ -53,10 +74,9 @@ public partial class StringVersion(VersionToken[] tokens, string original, IVers
     /// <summary>
     /// Parses a version string into a StringVersion instance, or throws if invalid.
     /// </summary>
-    public static StringVersion Parse(string s)
+    public static StringVersion Parse(string original)
     {
-        if (TryParse(s, out StringVersion? v) && v is not null) return v;
-        throw new FormatException("Invalid version string");
+        return new StringVersion(original);
     }
 
     /// <summary>
