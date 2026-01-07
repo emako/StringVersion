@@ -65,15 +65,24 @@ bool eq = v1.Equals(v2);
 if (v1 >= v2) { /* ... */ }
 ```
 
-### Semantic Versioning (SemVer) & Other Formats
+### Semantic Versioning (SemVer)
 
 ```csharp
 var semver1 = new StringVersion("1.2.3-alpha.1");
 var semver2 = new StringVersion("1.2.3-alpha.2");
 Console.WriteLine(semver1 < semver2); // True
+```
 
-// Date-based or custom versions
-var dateVer = new StringVersion("2023.01.01");
+### Other Comparison Formats
+
+```c#
+new StringVersion("V1.2.3") > 1; // True
+new StringVersion("V1.2.3") > 1L; // True
+new StringVersion("V1.2.3") > 1.2d; // True
+new StringVersion("V1.2.3") == "1.2.3"; // True
+new StringVersion("V1.2.3") == (1, 2, 3); // True
+new StringVersion("V1.2.3") == new Version(1, 2, 3); // True
+new StringVersion("V1.2.3") == new StringVersion("1.2.3"); // True
 ```
 
 ### Custom Comparison Strategy

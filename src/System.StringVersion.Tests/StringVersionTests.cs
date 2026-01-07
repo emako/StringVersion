@@ -69,4 +69,16 @@ public sealed class StringVersionTests
         Assert.NotNull(vF);
         Assert.True(vE!.CompareTo(vF!) == 0);
     }
+
+    [Fact]
+    public void DiffTypeOfVersions()
+    {
+        //Assert.True(new StringVersion("V1.2.3") >= 1);
+        //Assert.True(new StringVersion("V1.2.3") >= 1L);
+        //Assert.True(new StringVersion("V1.2.3") >= 1d);
+        Assert.True(new StringVersion("V1.2.3") == "1.2.3");
+        Assert.True(new StringVersion("V1.2.3") == (1, 2, 3));
+        Assert.True(new StringVersion("V1.2.3") == new StringVersion("1.2.3"));
+        Assert.True(new StringVersion("V1.2.3") == new Version(1, 2, 3));
+    }
 }
