@@ -31,7 +31,7 @@ internal static class Tokenizer
         {
             int j = iIdx;
             // read until separator
-            while (j < s.Length && s[j] != '.' && s[j] != '-' && s[j] != '+' && s[j] != '_') j++;
+            while (j < s.Length && s[j] != '.' && s[j] != '-' && s[j] != '+' && s[j] != '_' && s[j] != ' ') j++;
 
             var seg = s.Slice(iIdx, j - iIdx);
             if (seg.Length > 0)

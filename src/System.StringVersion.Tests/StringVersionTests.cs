@@ -59,5 +59,11 @@ public sealed class StringVersionTests
         Assert.NotNull(vC);
         Assert.NotNull(vD);
         Assert.True(vC!.CompareTo(vD!) == 0);
+
+        Assert.True(StringVersion.TryParse("MyProduct V1.2.3 for agent", out var vE));
+        Assert.True(StringVersion.TryParse("1.2.3", out var vF));
+        Assert.NotNull(vE);
+        Assert.NotNull(vF);
+        Assert.True(vE!.CompareTo(vF!) == 0);
     }
 }
