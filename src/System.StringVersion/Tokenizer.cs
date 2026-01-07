@@ -110,7 +110,8 @@ internal static class Tokenizer
                 continue;
             }
 
-            if (sep == '+')
+            // Handle build metadata: '+' or space as separator
+            if (sep == '+' || sep == ' ')
             {
                 int startB = j + 1;
                 ReadOnlySpan<char> build = s.Slice(startB);
