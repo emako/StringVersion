@@ -35,111 +35,219 @@ public partial class StringVersion
     public bool Equals(Tuple<int, int, int, int> tuple)
         => CompareTo(tuple) == 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is greater than the right tuple.
+    /// </summary>
     public static bool operator >(StringVersion left, (int, int) right)
         => left.CompareTo(right) > 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is less than the right tuple.
+    /// </summary>
     public static bool operator <(StringVersion left, (int, int) right)
         => left.CompareTo(right) < 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is greater than or equal to the right tuple.
+    /// </summary>
     public static bool operator >=(StringVersion left, (int, int) right)
         => left.CompareTo(right) >= 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is less than or equal to the right tuple.
+    /// </summary>
     public static bool operator <=(StringVersion left, (int, int) right)
         => left.CompareTo(right) <= 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is equal to the right tuple.
+    /// </summary>
     public static bool operator ==(StringVersion? left, (int, int) right)
         => left is not null && left.CompareTo(right) == 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is not equal to the right tuple.
+    /// </summary>
     public static bool operator !=(StringVersion? left, (int, int) right)
         => !(left == right);
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is greater than the right tuple.
+    /// </summary>
     public static bool operator >(StringVersion left, (int, int, int) right)
         => left.CompareTo(right) > 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is less than the right tuple.
+    /// </summary>
     public static bool operator <(StringVersion left, (int, int, int) right)
         => left.CompareTo(right) < 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is greater than or equal to the right tuple.
+    /// </summary>
     public static bool operator >=(StringVersion left, (int, int, int) right)
         => left.CompareTo(right) >= 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is less than or equal to the right tuple.
+    /// </summary>
     public static bool operator <=(StringVersion left, (int, int, int) right)
         => left.CompareTo(right) <= 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is equal to the right tuple.
+    /// </summary>
     public static bool operator ==(StringVersion? left, (int, int, int) right)
         => left is not null && left.CompareTo(right) == 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is not equal to the right tuple.
+    /// </summary>
     public static bool operator !=(StringVersion? left, (int, int, int) right)
         => !(left == right);
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is greater than the right tuple.
+    /// </summary>
     public static bool operator >(StringVersion left, (int, int, int, int) right)
         => left.CompareTo(right) > 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is less than the right tuple.
+    /// </summary>
     public static bool operator <(StringVersion left, (int, int, int, int) right)
         => left.CompareTo(right) < 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is greater than or equal to the right tuple.
+    /// </summary>
     public static bool operator >=(StringVersion left, (int, int, int, int) right)
         => left.CompareTo(right) >= 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is less than or equal to the right tuple.
+    /// </summary>
     public static bool operator <=(StringVersion left, (int, int, int, int) right)
         => left.CompareTo(right) <= 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is equal to the right tuple.
+    /// </summary>
     public static bool operator ==(StringVersion? left, (int, int, int, int) right)
         => left is not null && left.CompareTo(right) == 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is not equal to the right tuple.
+    /// </summary>
     public static bool operator !=(StringVersion? left, (int, int, int, int) right)
         => !(left == right);
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is greater than the right tuple.
+    /// </summary>
     public static bool operator >(StringVersion left, Tuple<int, int> right)
         => left.CompareTo(right) > 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is less than the right tuple.
+    /// </summary>
     public static bool operator <(StringVersion left, Tuple<int, int> right)
         => left.CompareTo(right) < 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is greater than or equal to the right tuple.
+    /// </summary>
     public static bool operator >=(StringVersion left, Tuple<int, int> right)
         => left.CompareTo(right) >= 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is less than or equal to the right tuple.
+    /// </summary>
     public static bool operator <=(StringVersion left, Tuple<int, int> right)
         => left.CompareTo(right) <= 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is equal to the right tuple.
+    /// </summary>
     public static bool operator ==(StringVersion? left, Tuple<int, int> right)
         => left is not null && left.CompareTo(right) == 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is not equal to the right tuple.
+    /// </summary>
     public static bool operator !=(StringVersion? left, Tuple<int, int> right)
         => !(left == right);
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is greater than the right tuple.
+    /// </summary>
     public static bool operator >(StringVersion left, Tuple<int, int, int> right)
         => left.CompareTo(right) > 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is less than the right tuple.
+    /// </summary>
     public static bool operator <(StringVersion left, Tuple<int, int, int> right)
         => left.CompareTo(right) < 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is greater than or equal to the right tuple.
+    /// </summary>
     public static bool operator >=(StringVersion left, Tuple<int, int, int> right)
         => left.CompareTo(right) >= 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is less than or equal to the right tuple.
+    /// </summary>
     public static bool operator <=(StringVersion left, Tuple<int, int, int> right)
         => left.CompareTo(right) <= 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is equal to the right tuple.
+    /// </summary>
     public static bool operator ==(StringVersion? left, Tuple<int, int, int> right)
         => left is not null && left.CompareTo(right) == 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is not equal to the right tuple.
+    /// </summary>
     public static bool operator !=(StringVersion? left, Tuple<int, int, int> right)
         => !(left == right);
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is greater than the right tuple.
+    /// </summary>
     public static bool operator >(StringVersion left, Tuple<int, int, int, int> right)
         => left.CompareTo(right) > 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is less than the right tuple.
+    /// </summary>
     public static bool operator <(StringVersion left, Tuple<int, int, int, int> right)
         => left.CompareTo(right) < 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is greater than or equal to the right tuple.
+    /// </summary>
     public static bool operator >=(StringVersion left, Tuple<int, int, int, int> right)
         => left.CompareTo(right) >= 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is less than or equal to the right tuple.
+    /// </summary>
     public static bool operator <=(StringVersion left, Tuple<int, int, int, int> right)
         => left.CompareTo(right) <= 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is equal to the right tuple.
+    /// </summary>
     public static bool operator ==(StringVersion? left, Tuple<int, int, int, int> right)
         => left is not null && left.CompareTo(right) == 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is not equal to the right tuple.
+    /// </summary>
     public static bool operator !=(StringVersion? left, Tuple<int, int, int, int> right)
         => !(left == right);
 

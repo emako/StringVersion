@@ -145,18 +145,43 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
         return Parse(s);
     }
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is greater than the right <see cref="StringVersion"/>.
+    /// </summary>
+    /// <param name="left">The left operand.</param>
+    /// <param name="right">The right operand.</param>
     public static bool operator >(StringVersion left, StringVersion right)
         => left.CompareTo(right) > 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is less than the right <see cref="StringVersion"/>.
+    /// </summary>
+    /// <param name="left">The left operand.</param>
+    /// <param name="right">The right operand.</param>
     public static bool operator <(StringVersion left, StringVersion right)
         => left.CompareTo(right) < 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is greater than or equal to the right <see cref="StringVersion"/>.
+    /// </summary>
+    /// <param name="left">The left operand.</param>
+    /// <param name="right">The right operand.</param>
     public static bool operator >=(StringVersion left, StringVersion right)
         => left.CompareTo(right) >= 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is less than or equal to the right <see cref="StringVersion"/>.
+    /// </summary>
+    /// <param name="left">The left operand.</param>
+    /// <param name="right">The right operand.</param>
     public static bool operator <=(StringVersion left, StringVersion right)
         => left.CompareTo(right) <= 0;
 
+    /// <summary>
+    /// Determines whether two <see cref="StringVersion"/> instances are equal.
+    /// </summary>
+    /// <param name="left">The left operand.</param>
+    /// <param name="right">The right operand.</param>
     public static bool operator ==(StringVersion? left, StringVersion? right)
     {
         if (ReferenceEquals(left, right)) return true;
@@ -164,6 +189,11 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
         return left.CompareTo(right) == 0;
     }
 
+    /// <summary>
+    /// Determines whether two <see cref="StringVersion"/> instances are not equal.
+    /// </summary>
+    /// <param name="left">The left operand.</param>
+    /// <param name="right">The right operand.</param>
     public static bool operator !=(StringVersion? left, StringVersion? right)
         => !(left == right);
 }

@@ -27,21 +27,51 @@ public partial class StringVersion
     public bool Equals(Version? other)
         => CompareTo(other) == 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is greater than the right <see cref="Version"/>.
+    /// </summary>
+    /// <param name="left">The left <see cref="StringVersion"/> operand.</param>
+    /// <param name="right">The right <see cref="Version"/> operand.</param>
     public static bool operator >(StringVersion left, Version right)
         => left.CompareTo(right) > 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is less than the right <see cref="Version"/>.
+    /// </summary>
+    /// <param name="left">The left <see cref="StringVersion"/> operand.</param>
+    /// <param name="right">The right <see cref="Version"/> operand.</param>
     public static bool operator <(StringVersion left, Version right)
         => left.CompareTo(right) < 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is greater than or equal to the right <see cref="Version"/>.
+    /// </summary>
+    /// <param name="left">The left <see cref="StringVersion"/> operand.</param>
+    /// <param name="right">The right <see cref="Version"/> operand.</param>
     public static bool operator >=(StringVersion left, Version right)
         => left.CompareTo(right) >= 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is less than or equal to the right <see cref="Version"/>.
+    /// </summary>
+    /// <param name="left">The left <see cref="StringVersion"/> operand.</param>
+    /// <param name="right">The right <see cref="Version"/> operand.</param>
     public static bool operator <=(StringVersion left, Version right)
         => left.CompareTo(right) <= 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is equal to the right <see cref="Version"/>.
+    /// </summary>
+    /// <param name="left">The left <see cref="StringVersion"/> operand.</param>
+    /// <param name="right">The right <see cref="Version"/> operand.</param>
     public static bool operator ==(StringVersion? left, Version? right)
         => left is not null && left.CompareTo(right) == 0;
 
+    /// <summary>
+    /// Determines whether the left <see cref="StringVersion"/> is not equal to the right <see cref="Version"/>.
+    /// </summary>
+    /// <param name="left">The left <see cref="StringVersion"/> operand.</param>
+    /// <param name="right">The right <see cref="Version"/> operand.</param>
     public static bool operator !=(StringVersion? left, Version? right)
         => !(left == right);
 
