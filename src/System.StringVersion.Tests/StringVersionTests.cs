@@ -80,5 +80,8 @@ public sealed class StringVersionTests
         Assert.True(new StringVersion("V1.2.3") == (1, 2, 3));
         Assert.True(new StringVersion("V1.2.3") == new StringVersion("1.2.3"));
         Assert.True(new StringVersion("V1.2.3") == new Version(1, 2, 3));
+
+        // Different number of components
+        Assert.True(new StringVersion("V1.2.3.4.5.6") == "V1.2.3.4.5.6");
     }
 }
