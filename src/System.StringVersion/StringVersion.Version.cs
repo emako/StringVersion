@@ -27,7 +27,7 @@ public partial class StringVersion
                 thisParts[i++] = t.Numeric;
             }
         }
-        for (; i < 4; i++) thisParts[i] = 0;
+        for (; i < 4; i++) thisParts[i] = -1L;
         for (i = 0; i < 4; i++)
         {
             int cmp = thisParts[i].CompareTo(otherParts[i]);
