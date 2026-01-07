@@ -23,24 +23,36 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
 
     /// <summary>
     /// Constructs a StringVersion by parsing a version string.
-    /// Throws FormatException if the string is null, empty, or invalid.
+    /// This constructor is guaranteed not to throw any exceptions, even if the input is invalid or tokenization fails.
     /// </summary>
     /// <param name="original">The version string to parse.</param>
     public StringVersion(string? original)
     {
-        Tokens = string.IsNullOrWhiteSpace(original) ? [] : Tokenizer.Tokenize(original.AsSpan());
+        VersionToken[] tokens;
+        try
+        {
+            tokens = string.IsNullOrWhiteSpace(original) ? [] : Tokenizer.Tokenize(original.AsSpan());
+        }
+        catch
+        {
+            // Swallow all exceptions to guarantee no exception is thrown from this constructor
+            tokens = [];
+        }
+        Tokens = tokens;
         Original = original ?? string.Empty;
         Strategy = SemVerCompareStrategy.Instance;
     }
 
     /// <summary>
     /// Constructs a StringVersion from tokens, original string, and optional strategy.
+    /// This constructor is guaranteed not to throw any exceptions.
     /// </summary>
     /// <param name="tokens">Parsed version tokens.</param>
     /// <param name="original">The original version string.</param>
     /// <param name="strategy">Comparison strategy (optional).</param>
     public StringVersion(VersionToken[] tokens, string? original, IVersionCompareStrategy? strategy = null)
     {
+        // Null checks to guarantee no exception is thrown
         Tokens = tokens ?? [];
         Original = original ?? string.Empty;
         Strategy = strategy ?? SemVerCompareStrategy.Instance;
