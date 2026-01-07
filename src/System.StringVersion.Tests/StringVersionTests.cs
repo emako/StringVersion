@@ -84,4 +84,14 @@ public sealed class StringVersionTests
         // Different number of components
         Assert.True(new StringVersion("V1.2.3.4.5.6") == "V1.2.3.4.5.6");
     }
+
+    [Fact]
+    public void IrregularVersions()
+    {
+        Assert.NotNull(new StringVersion("a.b.c.d"));
+        Assert.NotNull(new StringVersion("i_am-tester+here"));
+        Assert.NotNull(new StringVersion("i am tester here"));
+        Assert.True(new StringVersion("i am tester here") >= 0);
+        Assert.False(new StringVersion("i am tester here") > "1.0");
+    }
 }
