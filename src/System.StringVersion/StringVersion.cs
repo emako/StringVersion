@@ -29,7 +29,7 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
             throw new FormatException("Invalid version string");
         VersionToken[] tokens = Tokenizer.Tokenize(original.AsSpan());
         _tokens = tokens;
-        Original = original!;
+        Original = original ?? string.Empty;
         bool hasPre = false, hasBuild = false;
         foreach (VersionToken t in tokens)
         {
@@ -45,7 +45,7 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
     /// <param name="tokens">Parsed version tokens.</param>
     /// <param name="original">The original version string.</param>
     /// <param name="strategy">Comparison strategy (optional).</param>
-    public StringVersion(VersionToken[] tokens, string original, IVersionCompareStrategy? strategy = null)
+    public StringVersion(VersionToken[] tokens, string? original, IVersionCompareStrategy? strategy = null)
     {
         _tokens = tokens ?? [];
         Original = original ?? string.Empty;
@@ -61,7 +61,15 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
         if (string.IsNullOrWhiteSpace(original)) return false;
         try
         {
-            result = new StringVersion(original);
+            if (strategy is null)
+            {
+                result = new StringVersion(original);
+            }
+            else
+            {
+                VersionToken[] tokens = Tokenizer.Tokenize(original.AsSpan());
+                result = new StringVersion(tokens, original, strategy);
+            }
             return true;
         }
         catch
