@@ -73,7 +73,7 @@ internal static class Tokenizer
             {
                 int k = j + 1;
                 int startPr = k;
-                while (k < s.Length && s[k] != '+') k++;
+                while (k < s.Length && s[k] != '+' && s[k] != ' ') k++;
                 ReadOnlySpan<char> pr = s.Slice(startPr, k - startPr);
                 int p = 0;
                 while (p < pr.Length)
@@ -92,7 +92,7 @@ internal static class Tokenizer
                     p = q + 1;
                 }
                 iIdx = j + 1 + pr.Length;
-                if (iIdx < s.Length && s[iIdx] == '+')
+                if (iIdx < s.Length && s[iIdx] == '+' && s[iIdx] == ' ')
                 {
                     int bstart = iIdx + 1;
                     ReadOnlySpan<char> build = s.Slice(bstart);
