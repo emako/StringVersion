@@ -30,14 +30,7 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
         VersionToken[] tokens = Tokenizer.Tokenize(original.AsSpan());
         _tokens = tokens;
         Original = original ?? string.Empty;
-        bool hasPre = false;
-        bool hasBuild = false;
-        foreach (VersionToken t in tokens)
-        {
-            if (t.Kind == VersionTokenKind.PreRelease) hasPre = true;
-            if (t.Kind == VersionTokenKind.BuildMetadata) hasBuild = true;
-        }
-        Strategy = (hasPre || hasBuild) ? SemVerCompareStrategy.Instance : DefaultCompareStrategy.Instance;
+        Strategy = SemVerCompareStrategy.Instance;
     }
 
     /// <summary>
@@ -50,7 +43,7 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
     {
         _tokens = tokens ?? [];
         Original = original ?? string.Empty;
-        Strategy = strategy ?? DefaultCompareStrategy.Instance;
+        Strategy = strategy ?? SemVerCompareStrategy.Instance;
     }
 
     /// <summary>
