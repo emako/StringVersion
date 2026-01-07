@@ -2,7 +2,7 @@
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
   </Folder>
-  <Project Path="src/StringVersion.Benchmarks/System.StringVersion.Benchmarks.csproj" />
-  <Project Path="src/StringVersion.Tests/System.StringVersion.Tests.csproj" />
-  <Project Path="src/StringVersion/System.StringVersion.csproj" />
+  <Project Path="src/System.StringVersion.Benchmarks/System.StringVersion.Benchmarks.csproj" />
+  <Project Path="src/System.StringVersion.Tests/System.StringVersion.Tests.csproj" />
+  <Project Path="src/System.StringVersion/System.StringVersion.csproj" />
 </Solution>
