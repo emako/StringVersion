@@ -82,17 +82,18 @@ public partial class StringVersion : IComparable<StringVersion>, IEquatable<Stri
     {
         result = null;
         if (string.IsNullOrWhiteSpace(original)) return false;
+
         try
         {
-            if (strategy is null)
+            VersionToken[] tokens = Tokenizer.Tokenize(original.AsSpan());
+
+            // No empty version is allowed in strict mode
+            if (tokens is null || tokens.Length is 0)
             {
-                result = new StringVersion(original);
+                result = null;
+                return false;
             }
-            else
-            {
-                VersionToken[] tokens = Tokenizer.Tokenize(original.AsSpan());
-                result = new StringVersion(tokens, original, strategy);
-            }
+            result = new StringVersion(tokens, original, strategy);
             return true;
         }
         catch
