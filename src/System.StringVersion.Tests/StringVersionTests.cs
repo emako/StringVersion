@@ -91,7 +91,12 @@ public sealed class StringVersionTests
         Assert.NotNull(new StringVersion("a.b.c.d"));
         Assert.NotNull(new StringVersion("i_am-tester+here"));
         Assert.NotNull(new StringVersion("i am tester here"));
+
         Assert.True(new StringVersion("i am tester here") >= 0);
         Assert.False(new StringVersion("i am tester here") > "1.0");
+
+        Assert.False(StringVersion.TryParse("a.b.c.d", out _));
+        Assert.False(StringVersion.TryParse("i_am-tester+here", out _));
+        Assert.False(StringVersion.TryParse("i am tester here", out _));
     }
 }
