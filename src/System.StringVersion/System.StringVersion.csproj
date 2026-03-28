@@ -7,9 +7,9 @@
     <AssemblyName>System.StringVersion</AssemblyName>
     <RootNamespace>System.StringVersion</RootNamespace>
     <PackageId>StringVersion</PackageId>
-    <Version>1.0.2</Version>
-    <FileVersion>1.0.2</FileVersion>
-    <Version>$(VersionPrefix)1.0.2</Version>
+    <Version>1.0.3</Version>
+    <FileVersion>1.0.3</FileVersion>
+    <Version>$(VersionPrefix)1.0.3</Version>
     <Authors>ema</Authors>
     <Description>A lightweight, high-performance .NET library for parsing and comparing string-based versions, supporting multiple comparison strategies (including SemVer). Features a Span-based tokenizer, custom strategies, and is compatible with a wide range of .NET targets.</Description>
     <PackageProjectUrl>https://github.com/emako/StringVersion</PackageProjectUrl>
