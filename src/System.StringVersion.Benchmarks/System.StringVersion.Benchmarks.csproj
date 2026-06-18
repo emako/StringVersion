@@ -5,8 +5,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <!-- BenchmarkDotNet rejects non-optimized assemblies (typical Debug builds). -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\System.StringVersion\System.StringVersion.csproj" />
+    <ProjectReference Include="..\System.StringVersion\System.StringVersion.csproj">
+      <AdditionalProperties>Configuration=Release</AdditionalProperties>
+    </ProjectReference>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.7" />
   </ItemGroup>
 </Project>

@@ -1,10 +1,11 @@
-using System;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 
-public sealed class Benchmarks
+namespace System.StringVersion.Benchmarks;
+
+public class Benchmarks
 {
-    private string[] samples =
+    private readonly string[] samples =
     [
         "1.0.0+build.123",
         "1.0.0-rc.1",
@@ -15,7 +16,7 @@ public sealed class Benchmarks
     [Benchmark]
     public void ParseAll()
     {
-        foreach (var s in samples) _ = System.StringVersion.StringVersion.Parse(s);
+        foreach (var s in samples) _ = StringVersion.Parse(s);
     }
 }
 
@@ -24,5 +25,6 @@ internal sealed class Program
     public static void Main(string[] args)
     {
         var summary = BenchmarkRunner.Run<Benchmarks>();
+        _ = summary; // prevent unused variable warning
     }
 }
