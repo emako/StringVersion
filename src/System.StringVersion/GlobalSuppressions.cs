@@ -7,3 +7,4 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Style", "IDE0056:Use index operator")]
 [assembly: SuppressMessage("Style", "IDE0057:Use range operator")]
+[assembly: SuppressMessage("Maintainability", "CA1510:Use ArgumentNullException throw helper")]
